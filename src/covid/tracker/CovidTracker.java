@@ -15,7 +15,22 @@ public class CovidTracker {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        Vertice v = new Vertice();
+        v.createVertice();
+        v.createVertice();
+
+        System.out.println("El nodo con id: " + v.getId() + " esta infectado?");
+        System.out.println(v.isInfectado());
+
+        Vertice v2 = (Vertice) v.getNodo(2);
+        v2.setInfectado(true);
+        System.out.println("El nodo con id: " + v2.getId() + " esta infectado?");
+        System.out.println(v2.isInfectado());
+
+        v2.addArista(1);
+        v2.addArista(0);
+        System.out.println("El nodo con id: "  + v2.getId() + " está conectado con los nodos con id: ");
+        v2.listAristas();
     }
-    
+
 }
