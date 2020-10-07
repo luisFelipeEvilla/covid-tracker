@@ -39,6 +39,10 @@ public class Vertice extends Nodo{
         
         System.out.println(info);
     }
+
+    public Arista getAristas() {
+        return aristas;
+    }
     
     public void createVertice() {
         this.addNode(new Vertice());
