@@ -32,7 +32,7 @@ public class CovidTracker {
         configuracion = 0;
         iteracion = 0;
         PROBABILIDAD_MASCARILLA = 1 / 2;
-        PROBABILIDAD_ARISTA = 1 / 2;
+        PROBABILIDAD_ARISTA = 1 / 4;
         PROBABILIDAD_INFECTADO = 1/2;
         PROTECCCION_MASCARILLA= (float) 0.3;
     }
