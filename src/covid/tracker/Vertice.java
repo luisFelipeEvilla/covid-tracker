@@ -22,13 +22,38 @@ public class Vertice extends Nodo{
         mascarilla = false;
         aristas = null;
     }
-    
+
+    public Vertice(Vertice original) {
+        super(original.getId());
+        this.infectado = original.isInfectado();
+        this.mascarilla = original.isMascarilla();
+        this.aristas = original.getAristas();
+    }
+
     public void addArista(int id) {
         if (aristas == null) {
             aristas = new Arista(id);
         } else {
             aristas.addNode(new Arista(id));
         }
+    }
+    
+    public Vertice getInfectados() {
+        Vertice v = this;
+        Vertice infectados = null;
+        
+        while (v != null) {
+            if (v.isInfectado()) {
+                if ( infectados == null) {
+                    infectados = new Vertice(v);
+                } else {
+                    infectados.addNode(new Vertice(v));
+                }
+            }
+            v = (Vertice) v.getLink();
+        }
+        
+        return infectados;
     }
     
     public void listAristas() {
