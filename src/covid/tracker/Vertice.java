@@ -13,11 +13,14 @@ public class Vertice extends Nodo{
     
     private static int idGen = 0;
     private boolean infectado;
+    private boolean mascarilla;
     private Arista aristas;
     
     public Vertice() {
         super(idGen++);
         infectado = false;
+        mascarilla = false;
+        aristas = null;
     }
     
     public void addArista(int id) {
@@ -39,6 +42,16 @@ public class Vertice extends Nodo{
         
         System.out.println(info);
     }
+
+    public boolean isMascarilla() {
+        return mascarilla;
+    }
+
+    public void setMascarilla(boolean mascarilla) {
+        this.mascarilla = mascarilla;
+    }
+    
+    
 
     public Arista getAristas() {
         return aristas;
