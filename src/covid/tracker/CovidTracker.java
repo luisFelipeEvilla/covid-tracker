@@ -13,8 +13,10 @@ import java.util.Scanner;
  * @author luisf
  */
 public class CovidTracker {
-    Vertice vertices = null;
-    
+
+    private Vertice vertices = null;
+    private boolean paciente0 = false;
+
     /**
      * @param args the command line arguments
      */
@@ -28,10 +30,11 @@ public class CovidTracker {
         Random rand = new Random();
         int numVertices = 0;
 
+        // establecer numero de vertices
         System.out.println("¿Cuantos vertices desea?");
         numVertices = scan.nextInt();
-        
 
+        // crear vertice inicial
         if (numVertices > 0) {
             vertices = new Vertice();
         }
@@ -53,8 +56,8 @@ public class CovidTracker {
                 if (v2.equals(v1)) {
                     v2 = (Vertice) v2.getLink();
                 } else {
-                    probabilidad = rand.nextFloat();
-                    if (probabilidad >= 0.5) {
+                    probabilidad = Math.round(rand.nextFloat()*10);
+                    if (probabilidad >= 5) {
                         v1.addArista(v2.getId());
                     }
                 }
@@ -74,14 +77,29 @@ public class CovidTracker {
                 }
             }
 
+            //generacion del paciente 0
+            if (!paciente0) {
+                probabilidad = Math.round(rand.nextFloat()*10);
+                probabilidad = probabilidad/10;
+                if (probabilidad >= (1 - 1 / numVertices)) {
+                    v1.setInfectado(true);
+                    paciente0 = true;
+                }
+            }
+
             v3 = v1;
             v1 = (Vertice) v1.getLink();
         }
 
-        v1 = vertices;
+        if (!paciente0) {
+            vertices.setInfectado(true);
+            paciente0 = true;
+        }
 
         v1 = vertices;
         while (v1 != null) {
+            System.out.println("El vertice con id: " + v1.getId() + " ¿esta infectado?");
+            System.out.println(v1.isInfectado());
             System.out.println("El vertice con id: " + v1.getId() + " tiene conexion con los vertices");
             v1.listAristas();
             v1 = (Vertice) v1.getLink();
