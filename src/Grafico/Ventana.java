@@ -28,7 +28,7 @@ public class Ventana extends javax.swing.JFrame {
         initComponents();
         
         cvt = new CovidTracker();
-        cvt.setVertices(numeroValido());
+        //cvt.setVertices(numeroValido());
         //cvt.generarGrafo();
         reguladorEjex = 100;
         reguladorEjey = 100;
