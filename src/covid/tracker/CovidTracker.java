@@ -5,6 +5,7 @@
  */
 package covid.tracker;
 
+import Grafico.Ventana;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -13,7 +14,7 @@ import java.util.Scanner;
  * @author luisf
  */
 public class CovidTracker {
-
+    int x;
     private Vertice vertices;
     private boolean paciente0;
     private int numVertices;
@@ -24,6 +25,11 @@ public class CovidTracker {
     private final float PROBABILIDAD_ARISTA;
     private final float PROBABILIDAD_INFECTADO;
     private final float PROTECCCION_MASCARILLA;
+    
+    
+    public Vertice getPtr(){
+        return vertices;
+    }
 
     public CovidTracker() {
         vertices = null;
@@ -45,9 +51,9 @@ public class CovidTracker {
         Scanner scan = new Scanner(System.in);
         int opcion = 0;
 
-        app.menuInicial();
+        app.menuInicial(); 
         app.generarGrafo();
-
+        
         switch (app.configuracion) {
             case 1:
                 break;
@@ -86,6 +92,7 @@ public class CovidTracker {
         // crear vertice inicial
         if (numVertices > 0) {
             vertices = new Vertice();
+            
         }
 
         for (int i = 1; i < numVertices; i++) {
@@ -146,6 +153,7 @@ public class CovidTracker {
             vertices.setInfectado(true);
             paciente0 = true;
         }
+       
     }
 
     public void aplicarMascarilla() {
