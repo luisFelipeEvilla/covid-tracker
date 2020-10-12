@@ -26,7 +26,10 @@ public class Ventana extends javax.swing.JFrame {
     public Ventana() {
 
         initComponents();
+        
         cvt = new CovidTracker();
+        cvt.setVertices(numeroValido());
+        cvt.generarGrafo();
         reguladorEjex = 100;
         reguladorEjey = 100;
         contadorParaAgregarColumna = 0;
@@ -54,6 +57,14 @@ public class Ventana extends javax.swing.JFrame {
         return -1;
     }
     
+    public int numeroValido() {
+        int n = Integer.parseInt(this.verticeField.getText());
+        while (n <= 0) {
+            this.verticeField.setText("");
+            n = Integer.parseInt(JOptionPane.showInputDialog("DIGITE NUMERO DE VERTICES MAYOR A 0"));
+        }
+        return n;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -219,11 +230,7 @@ public class Ventana extends javax.swing.JFrame {
     private void IteracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IteracionActionPerformed
         if (reguladorIteracion == 0) {
             if (this.verticeField.getText().isEmpty() == false) {
-                int n = Integer.parseInt(this.verticeField.getText());
-                while ( n<= 0) {
-                    this.verticeField.setText("");
-                    n = Integer.parseInt(JOptionPane.showInputDialog("DIGITE NUMERO DE VERTICES MAYOR A 0"));
-                }
+               
                 cvt.setVertices(Integer.parseInt(this.verticeField.getText()));
                 cvt.generarGrafo();
                 reguladorIteracion++;
