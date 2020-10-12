@@ -29,7 +29,7 @@ public class Ventana extends javax.swing.JFrame {
         
         cvt = new CovidTracker();
         cvt.setVertices(numeroValido());
-        cvt.generarGrafo();
+        //cvt.generarGrafo();
         reguladorEjex = 100;
         reguladorEjey = 100;
         contadorParaAgregarColumna = 0;
@@ -204,43 +204,45 @@ public class Ventana extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-        Graphics g = this.jPanel1.getGraphics();
-        boolean espaciado = false;
-        int iterador = 0;
-        if (this.verticeField.getText().isEmpty() == false) {
-            while (iterador < Integer.parseInt(verticeField.getText())) {
-
-                g.drawOval(reguladorEjex * 125 / 100, reguladorEjey * 125 / 100, 50, 50);
-                reguladorEjey += 100;
-
-                if (contadorParaAgregarColumna % 3 == 0) {
-                    reguladorEjex += 100;
-                    reguladorEjey = 200;
-                }
-                contadorParaAgregarColumna++;
-
-                iterador++;
-            }
-        }
-        this.verticeField.setText("");
-
+//        Graphics g = this.jPanel1.getGraphics();
+//        boolean espaciado = false;
+//        int iterador = 0;
+//        if (this.verticeField.getText().isEmpty() == false) {
+//            while (iterador < Integer.parseInt(verticeField.getText())) {
+//
+//                g.drawOval(reguladorEjex * 125 / 100, reguladorEjey * 125 / 100, 50, 50);
+//                reguladorEjey += 100;
+//
+//                if (contadorParaAgregarColumna % 3 == 0) {
+//                    reguladorEjex += 100;
+//                    reguladorEjey = 200;
+//                }
+//                contadorParaAgregarColumna++;
+//
+//                iterador++;
+//            }
+//        }
+//        this.verticeField.setText("");
+          
+          cvt.generarGrafo();
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void IteracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IteracionActionPerformed
-        if (reguladorIteracion == 0) {
-            if (this.verticeField.getText().isEmpty() == false) {
-               
-                cvt.setVertices(Integer.parseInt(this.verticeField.getText()));
-                cvt.generarGrafo();
-                reguladorIteracion++;
-            }
-
-        } else {
-            reguladorIteracion++;
-        }
-        String label = "" + reguladorIteracion;
-        this.iteraciones.setText(label);
+//        if (reguladorIteracion == 0) {
+//            if (this.verticeField.getText().isEmpty() == false) {
+//               
+//                cvt.setVertices(Integer.parseInt(this.verticeField.getText()));
+//                cvt.generarGrafo();
+//                reguladorIteracion++;
+//            }
+//
+//        } else {
+//            reguladorIteracion++;
+//        }
+//        String label = "" + reguladorIteracion;
+//        this.iteraciones.setText(label);
+          cvt.listarVertices();
     }//GEN-LAST:event_IteracionActionPerformed
 
     private void verticeFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verticeFieldActionPerformed
