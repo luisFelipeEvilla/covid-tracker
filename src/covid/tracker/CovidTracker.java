@@ -14,7 +14,7 @@ import java.util.Scanner;
  * @author luisf
  */
 public class CovidTracker {
-    int x;
+    
     private Vertice vertices;
     private boolean paciente0;
     private int numVertices;
@@ -26,11 +26,6 @@ public class CovidTracker {
     private final float PROBABILIDAD_INFECTADO;
     private final float PROTECCCION_MASCARILLA;
     
-    
-    public Vertice getPtr(){
-        return vertices;
-    }
-
     public CovidTracker() {
         vertices = null;
         paciente0 = false;
@@ -42,49 +37,7 @@ public class CovidTracker {
         PROBABILIDAD_INFECTADO = 1/2;
         PROTECCCION_MASCARILLA= (float) 0.3;
     }
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        CovidTracker app = new CovidTracker();
-        Scanner scan = new Scanner(System.in);
-        int opcion = 0;
-
-        app.menuInicial(); 
-        app.generarGrafo();
-        
-        switch (app.configuracion) {
-            case 1:
-                break;
-            case 2:
-                app.aplicarMascarilla();
-                break;
-            case 3:
-                app.aplicarMascarillaAleatorio();
-        }
-
-        app.listarVertices();
-
-        do {
-            System.out.println("¿Desea generar una nueva iteracion?");
-            System.out.println("1. Si");
-            System.out.println("2. No");
-            opcion = scan.nextInt();
-
-            if (opcion == 1) {
-                Vertice infectados = app.vertices.getInfectados();
-                app.infectar(infectados);
-            }
-
-            app.mostrarInfectados();
-        } while (opcion == 1 && opcion != 2);
-    }
-
-    /**
-     * Crea los nodos del grafo con sus aristas aleatorias, y el paciente0 de
-     * manera aleatoria
-     */
+    
     public void generarGrafo() {
         Random rand = new Random();
         PROBABILIDAD_PACIENTE_CERO = 1 - 1 / numVertices;
@@ -187,6 +140,10 @@ public class CovidTracker {
      * @param infectados Lista de vertices que ya estaban infectados antes de
      * esta iteracion (Los que pueden infectar a otros en esta iteracion)
      */
+    /**
+     * Crea los nodos del grafo con sus aristas aleatorias, y el paciente0 de
+     * manera aleatoria
+     */
     public void infectar(Vertice infectados) {
         // Nodo que infecta     
         Vertice v = infectados;
@@ -221,21 +178,21 @@ public class CovidTracker {
         iteracion++;
     }
 
-    public void menuInicial() {
-        Scanner scan = new Scanner(System.in);
+    public void menuInicial(int numeroVertices) {
+        
         do {
-            System.out.println("¿Cuantos nodos desea para la simulación?");
-            numVertices = scan.nextInt();
+            //System.out.println("¿Cuantos nodos desea para la simulación?");
+            numVertices = numeroVertices;
         } while (numVertices <= 0);
 
-        do {
-            System.out.println("¿Como desea realizar la simulación?");
-            System.out.println("1. Todos los nodos sin mascarrilla");
-            System.out.println("2. Todos los nodos con mascarilla");
-            System.out.println("3. Asignación aleatoria de mascarilla");
-            configuracion = scan.nextInt();
-
-        } while (configuracion < 1 && configuracion > 3);
+//        do {
+//            System.out.println("¿Como desea realizar la simulación?");
+//            System.out.println("1. Todos los nodos sin mascarrilla");
+//            System.out.println("2. Todos los nodos con mascarilla");
+//            System.out.println("3. Asignación aleatoria de mascarilla");
+//            configuracion = scan.nextInt();
+//
+//        } while (configuracion < 1 && configuracion > 3);
     }
 
     public void listarVertices() {
@@ -264,4 +221,57 @@ public class CovidTracker {
         }
         System.out.println("");
     }
+    
+    public void setVertices(int numVertices){
+        this.numVertices=numVertices;
+    }
+    public Vertice getPtr(){
+        return vertices;
+    }
+
+    
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+          Ventana v = new Ventana();
+          v.setVisible(true);
+         // CovidTracker app = new CovidTracker();
+          
+//        Scanner scan = new Scanner(System.in);
+//        int opcion = 0;
+//          
+//       // app.menuInicial(); 
+//        app.generarGrafo();
+          
+//        switch (v.configuracion()) {
+//            case 1:
+//                break;
+//            case 2:
+//                app.aplicarMascarilla();
+//                break;
+//            case 3:
+//                app.aplicarMascarillaAleatorio();
+//        }
+           
+//           app.listarVertices();
+//
+//        do {
+//            System.out.println("¿Desea generar una nueva iteracion?");
+//            System.out.println("1. Si");
+//            System.out.println("2. No");
+//            opcion = scan.nextInt();
+//
+//            if (opcion == 1) {
+//                Vertice infectados = app.vertices.getInfectados();
+//                app.infectar(infectados);
+//            }
+//
+//             app.mostrarInfectados();
+//        } while (opcion == 1 && opcion != 2);
+    }
+
+    
+    
 }
