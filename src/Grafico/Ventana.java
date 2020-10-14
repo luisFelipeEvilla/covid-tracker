@@ -5,8 +5,11 @@
  */
 package Grafico;
 
+import covid.tracker.Vertice;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import covid.tracker.Grafo;
 
 /**
  *
@@ -14,16 +17,61 @@ import java.awt.Graphics;
  */
 public class Ventana extends javax.swing.JFrame {
 
-    int reguladorEjex;
-    int reguladorEjey;
+    int posicionX;
+    int posicionY;
+    private final float DISTANCIA_NODOS_X = 100;
+    private final float DISTANCIA_NODOS_Y = 100;
     int contadorParaAgregarColumna;
+    Grafo grafo;
 
     public Ventana() {
         initComponents();
-        reguladorEjex = 100;
-        reguladorEjey = 100;
-        contadorParaAgregarColumna = 0;
+        this.grafo = null;
+        this.setVisible(true);
+        this.setSize(1024, 600);
         this.jPanel1.setBackground(new Color(255, 205, 178));
+        this.setResizable(false);
+
+        posicionX = jPanel1.getWidth()/2;
+        posicionY = jPanel1.getHeight()/2;
+        contadorParaAgregarColumna = 0;
+    }
+
+    public void mostrarGrafo() {
+        Graphics g = jPanel1.getGraphics();
+
+        Vertice v = grafo.getPtr();
+
+        int iterador = 0;
+
+        while (v != null) {
+            switch (iterador) {
+                case 0:
+                    posicionY = 200;
+                    g.drawOval(posicionX, posicionY, 50, 50);
+                    g.drawString(Integer.toString(v.getId()), posicionX + 25, posicionY + 30);
+                    break;
+                case 1:
+                    posicionY -= DISTANCIA_NODOS_Y;
+                    g.drawOval(posicionX, posicionY, 50, 50);
+                    g.drawString(Integer.toString(v.getId()), posicionX + 25, posicionY + 30);
+                    break;
+                case 2:
+                    posicionY += DISTANCIA_NODOS_Y * 2;
+                    g.drawOval(posicionX, posicionY, 50, 50);
+                    g.drawString(Integer.toString(v.getId()), posicionX + 25, posicionY + 30);
+                    posicionX -= DISTANCIA_NODOS_X;
+                    iterador = -1;
+                    break;
+                default:
+                    break;
+            }
+            
+            iterador++;
+
+            v = (Vertice) v.getLink();
+        }
+
     }
 
     /**
@@ -36,10 +84,7 @@ public class Ventana extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        $btn_mostrarGrafo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(600, 600));
@@ -48,85 +93,53 @@ public class Ventana extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 782, Short.MAX_VALUE)
+            .addGap(0, 956, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 410, Short.MAX_VALUE)
         );
 
-        jButton1.setText("Nodo");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        $btn_mostrarGrafo.setText("Mostrar Grafo");
+        $btn_mostrarGrafo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                $btn_mostrarGrafoActionPerformed(evt);
             }
         });
-
-        jButton2.setText("Arista");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addGap(42, 42, 42)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
-                    .addComponent(jTextField2))
-                .addContainerGap(49, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(423, 423, 423)
+                        .addComponent($btn_mostrarGrafo)))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(197, 197, 197)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(154, 154, 154)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(411, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(124, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent($btn_mostrarGrafo)
+                .addGap(32, 32, 32))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-        
-        Graphics g = this.jPanel1.getGraphics();
-        boolean espaciado = false;
-        int iterador = 0;
-        if (this.jTextField1.getText().isEmpty() == false) {
-            while (iterador <Integer.parseInt(jTextField1.getText())) {
+    private void $btn_mostrarGrafoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_$btn_mostrarGrafoActionPerformed
+        this.grafo = new Grafo();
+        grafo.generarGrafo();
 
-                g.drawOval(reguladorEjex*125/100, reguladorEjey*125/100, 50, 50);
-                reguladorEjey += 100;
-
-                if (contadorParaAgregarColumna % 3 == 0) {
-                    reguladorEjex += 100;
-                    reguladorEjey = 200;
-                }
-                contadorParaAgregarColumna++;
-
-                iterador++;
-            }
-        }
-        this.jTextField1.setText("");
-
-
-    }//GEN-LAST:event_jButton1ActionPerformed
+        mostrarGrafo();
+    }//GEN-LAST:event_$btn_mostrarGrafoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -164,10 +177,7 @@ public class Ventana extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton $btn_mostrarGrafo;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 }
