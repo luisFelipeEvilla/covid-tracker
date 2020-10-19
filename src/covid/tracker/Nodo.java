@@ -21,7 +21,7 @@ public abstract class Nodo {
 
     public void addNode(Nodo node) {
         Nodo p = this;
-
+        
         while (p.getLink() != null) {
             p = p.getLink();
         }
@@ -29,6 +29,16 @@ public abstract class Nodo {
         if (p != null) {
             p.setLink(node);
         }
+    }
+    
+    public int cantidadDeVertices(Nodo ptr){
+        int cont=0;
+        Nodo temp = ptr;
+        while(temp!=null){
+            temp=temp.link;
+            cont++;
+        }
+        return cont;
     }
 
     public Nodo removeNode(Nodo ptr, int id) {
@@ -49,6 +59,12 @@ public abstract class Nodo {
         }
 
         return ptr;
+    }
+    public void recorrerVertices(Nodo ptr){
+        Nodo temp = ptr;
+        while(temp!=null){
+            temp=temp.link;
+        }
     }
     
     public Nodo getNodo(int id) {

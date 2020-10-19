@@ -14,10 +14,16 @@ import java.util.Scanner;
  * @author luisf
  */
 public class CovidTracker {
+    
+
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Ventana ventana = new Ventana();
+        Ventana v = new Ventana();
+        v.setVisible(true);
     }
+
+    
+    
 }

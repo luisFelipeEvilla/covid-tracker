@@ -1,9 +1,12 @@
 package covid.tracker;
 
-
 import covid.tracker.Arista;
 import covid.tracker.Vertice;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.Random;
+import java.util.Scanner;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -17,6 +20,7 @@ import java.util.Random;
 public class Grafo {
 
     private Vertice vertices;
+    //  private Vertice verticeP;
     private boolean paciente0;
     private int numVertices = 5;
     private int configuracion;
@@ -192,6 +196,18 @@ public class Grafo {
         }
     }
 
+    public boolean todosInfectados() {
+        Vertice v = vertices;
+        while (v != null) {
+            if (!v.isInfectado()) {
+                return false;
+
+            }
+            v = (Vertice) v.link;
+        }
+        return true;
+    }
+
     public void mostrarInfectados() {
         Vertice v = vertices;
 
@@ -208,7 +224,39 @@ public class Grafo {
     public Vertice getPtr() {
         return vertices;
     }
-    public void setVertices(int numVertices){
-        this.numVertices=numVertices;
+
+    public void setVertices(int numVertices) {
+        this.numVertices = numVertices;
+    }
+    //Generar el grafo que el ususario inserta via txt
+    
+    public void grafoUsuario(File f) throws FileNotFoundException{
+        boolean primero=true;
+        Scanner lectura  = new Scanner(f);
+        PrintWriter pw = new PrintWriter(f);
+       
+        int i=0;
+        Vertice.setIdGen(0);
+        while(lectura.hasNext()){
+             String linea = lectura.nextLine();
+            linea = linea.trim();
+            char array[] = linea.toCharArray();
+            if(primero){
+                vertices = new Vertice();
+                //vertices.setId(array[i]);
+                //i++;
+                primero=false;
+            }else{
+                vertices.createVertice();
+                //vertices.setId(i);  
+            }
+            for (int j = 2; j < array.length; j++) {
+                
+                if(array[j]!=','){
+                    vertices.addArista(array[j]);
+                }
+            }
+            
+        }
     }
 }
