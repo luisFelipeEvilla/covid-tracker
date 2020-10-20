@@ -92,5 +92,18 @@ public abstract class Nodo {
     public void setId(int id) {
         this.id = id;
     }
+    
+    public int getSize() {
+        int contador = 0;
+        
+        Nodo v = this;
+        
+        while (v != null) {
+            v = v.getLink();
+            contador++;
+        }
+        
+        return contador;
+    }
 
 }
