@@ -38,14 +38,14 @@ public class Grafo {
         configuracion = 0;
         iteracion = 0;
         PROBABILIDAD_MASCARILLA = 1 / 2;
-        PROBABILIDAD_ARISTA = 0.5f;
+        PROBABILIDAD_ARISTA = 0.69f;
         PROBABILIDAD_INFECTADO = 1 / 2;
         PROTECCCION_MASCARILLA = (float) 0.3;
     }
 
     public void generarGrafo() {
         Random rand = new Random();
-        PROBABILIDAD_PACIENTE_CERO = 1 - 1 / numVertices;
+        PROBABILIDAD_PACIENTE_CERO = 0.4f;
 
         // crear vertice inicial
         if (numVertices > 0) {
