@@ -39,7 +39,7 @@ public class Grafo {
         configuracion = 0;
         iteracion = 0;
         PROBABILIDAD_MASCARILLA = 1 / 2;
-        PROBABILIDAD_ARISTA = 0.60f;
+        PROBABILIDAD_ARISTA = 0.9f;
 
     }
 
