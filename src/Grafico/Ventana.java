@@ -114,10 +114,10 @@ public class Ventana extends javax.swing.JFrame {
     }
 
     // Dibuja los vertices
-    public void dibujarVertices(int opcion) {
+    public void dibujarVertices() {
         Graphics g = this.grafoPanel.getGraphics();
         Vertice v = cvt.getPtr();
-
+        posicionX = 40;
         int contador = 0;
 
         while (v != null) {
@@ -143,6 +143,7 @@ public class Ventana extends javax.swing.JFrame {
             }
 
             if (v.isInfectado()) {
+                g.setColor(Color.black);
                 g.fillOval(posicionX, posicionY, ANCHO_NODO, ALTO_NODO);
                 g.setColor(Color.white);
                 g.drawString("usuario " + v.getId(), posicionX, posicionY + 30);
@@ -190,8 +191,8 @@ public class Ventana extends javax.swing.JFrame {
                     y1 += ALTO_NODO + 15;
                     // justo encima
                     if (x1 == x2) {
-                        x1 += ANCHO_NODO/2;
-                        x2 += ANCHO_NODO/2;
+                        x1 += ANCHO_NODO / 2;
+                        x2 += ANCHO_NODO / 2;
                         y2 -= 10;
                         // cuerpo de la flecha
                         g.drawLine(x1, y1, x2, y2);
@@ -203,15 +204,15 @@ public class Ventana extends javax.swing.JFrame {
                         // encima a la izquierda
                         if (x1 < x2) {
                             x1 += ANCHO_NODO;
-                            
+
                             // cuerpo de la flecha
                             g.drawLine(x1, y1, x2, y2);
 
                             // pico de la flecha
-                            g.drawLine(x2, y2, x2 - 12, y2 -8);
+                            g.drawLine(x2, y2, x2 - 12, y2 - 8);
                             g.drawLine(x2, y2, x2 + 4, y2 - 8);
-                           
-                         // encima a la derecha   
+
+                            // encima a la derecha   
                         } else {
                             x2 += ANCHO_NODO;
                             y2 -= 10;
@@ -227,8 +228,8 @@ public class Ventana extends javax.swing.JFrame {
                 } else {
                     // a la misma altura
                     if (y1 == y2) {
-                        y1 += ALTO_NODO/2;
-                        y2 += ALTO_NODO/2;
+                        y1 += ALTO_NODO / 2;
+                        y2 += ALTO_NODO / 2;
 
                         // a la izquierda
                         if (x1 < x2) {
@@ -240,7 +241,7 @@ public class Ventana extends javax.swing.JFrame {
                             // pico de la flecha
                             g.drawLine(x2 - 8, y2 - 8, x2, y2);
                             g.drawLine(x2 - 8, y2 + 8, x2, y2);
-                            
+
                             // a la derecha
                         } else {
                             x1 -= 10;
@@ -253,24 +254,24 @@ public class Ventana extends javax.swing.JFrame {
                             g.drawLine(x2 + 8, y2 - 8, x2, y2);
                             g.drawLine(x2 + 8, y2 + 8, x2, y2);
                         }
-                        
+
                         // por debajo
                     } else {
                         y1 -= 10;
-                        
+
                         //  justo debajo
                         if (x1 == x2) {
                             x1 += ANCHO_NODO / 2;
-                            x2 += ANCHO_NODO /2 ;
+                            x2 += ANCHO_NODO / 2;
                             y2 += ALTO_NODO + 10;
-                            
+
                             // cuerpo de la flecha
                             g.drawLine(x1, y1, x2, y2);
 
                             // pico de la flecha
                             g.drawLine(x2 - 8, y2 + 8, x2, y2);
                             g.drawLine(x2 + 8, y2 + 8, x2, y2);
-                            
+
                             // debajo a la izquierda
                         } else {
                             if (x1 < x2) {
@@ -283,13 +284,13 @@ public class Ventana extends javax.swing.JFrame {
                                 // pico de la flecha
                                 g.drawLine(x2 - 8, y2 + 8, x2, y2);
                                 g.drawLine(x2 + 8, y2 + 8, x2, y2);
-                                
+
                                 // debajo a la derecha
                             } else {
-                                x2 += ANCHO_NODO  + 10;
+                                x2 += ANCHO_NODO + 10;
                                 x1 += 10;
                                 y2 += ALTO_NODO + 10;
-                                
+
                                 // cuerpo de la flecha
                                 g.drawLine(x1, y1, x2, y2);
 
@@ -308,23 +309,6 @@ public class Ventana extends javax.swing.JFrame {
             v = (Vertice) v.getLink();
         }
 
-    }
-
-    public int cuadrante(Punto coordenada1, Punto coordenada2) {
-
-        int n = -1;
-
-        if (coordenada2.x > coordenada1.x && coordenada2.y < coordenada1.y) {
-            n = 1;
-        } else if (coordenada2.x < coordenada1.x && coordenada2.y < coordenada1.y) {
-            n = 2;
-        } else if (coordenada2.x < coordenada1.x && coordenada2.y > coordenada1.y) {
-            n = 3;
-        } else {
-            n = 4;
-        }
-
-        return n;
     }
 
     /**
@@ -351,7 +335,7 @@ public class Ventana extends javax.swing.JFrame {
         Iteracion = new javax.swing.JButton();
         iteraciones = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        crear = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
@@ -456,10 +440,10 @@ public class Ventana extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Crear");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        crear.setText("Crear");
+        crear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                crearActionPerformed(evt);
             }
         });
 
@@ -496,7 +480,7 @@ public class Ventana extends javax.swing.JFrame {
                             .addComponent(opcion1)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(104, 104, 104)
-                        .addComponent(jButton3)))
+                        .addComponent(crear)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -513,7 +497,7 @@ public class Ventana extends javax.swing.JFrame {
                 .addGap(55, 55, 55)
                 .addComponent(opcion3)
                 .addGap(36, 36, 36)
-                .addComponent(jButton3)
+                .addComponent(crear)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(iteraciones, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -559,39 +543,13 @@ public class Ventana extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void IteracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IteracionActionPerformed
-
-        if (verticeField.getText().isEmpty() == false) {
-            if (configuracion() != -1) {
-
-                if (reguladorIteracion == 0) {
-                    if (!grafoU) {
-                        cvt.setVertices(numeroValido());
-
-                    }
-                    grafoU = false;
-                    cvt.generarGrafo();
-                    seleccionado();
-                    this.dibujarVertices(1);
-                    this.dibujarAristas();
-                    reguladorIteracion++;
-                } else {
-                    cvt.infectar(cvt.getPtr());
-                    this.dibujarVertices(2);
-                    reguladorIteracion++;
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "SELECCIONE MODALIDAD");
-            }
-
-        } else {
-            JOptionPane.showMessageDialog(null, "DIGITE UNA CANTIDAD DE VERTICES");
-        }
-
-        String label = "" + reguladorIteracion;
+        cvt.infectar(cvt.getPtr().getInfectados());
+        dibujarVertices();
+        String label = "" + ++reguladorIteracion;
         this.iteraciones.setText(label);
         cvt.listarVertices();
         cvt.mostrarInfectados();
-        if (cvt.todosInfectados() && verticeField.getText().isEmpty() == false && configuracion() != -1) {
+        if (cvt.todosInfectados() && verticeField.getText().isEmpty() == false) {
             JOptionPane.showMessageDialog(null, "YA TODOS LOS USUARIOS TIENEN COVID-19");
         }
     }//GEN-LAST:event_IteracionActionPerformed
@@ -621,24 +579,28 @@ public class Ventana extends javax.swing.JFrame {
         this.opcion3.setEnabled(true);
         this.grafoPanel.repaint();
         this.grupoBotones.clearSelection();
+        crear.setEnabled(true);
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        JFileChooser abrir = new JFileChooser();
-        abrir.showOpenDialog(this);
-        File f = abrir.getSelectedFile();
-        grafoU = true;
-        try {
-            cvt.grafoUsuario(f);
-            this.verticeField.setText(String.valueOf(999));
-            //this.verticeField.setText(String.valueOf(ptr.cantidadDeVertices(ptr)));
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+    private void crearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearActionPerformed
+        if (verticeField.getText().isEmpty() == false) {
+            if (configuracion() != -1) {
+                cvt.setVertices(numeroValido());
+                cvt.generarGrafo();
+                
+                seleccionado();
+                this.dibujarVertices();
+                this.dibujarAristas();
+                crear.setEnabled(false);
+            } else {
+                JOptionPane.showMessageDialog(null, "SELECCIONE MODALIDAD");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "DIGITE UNA CANTIDAD DE VERTICES");
         }
 
-
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_crearActionPerformed
 
     /**
      * @param args the command line arguments
@@ -678,11 +640,11 @@ public class Ventana extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Iteracion;
+    private javax.swing.JButton crear;
     private javax.swing.JPanel grafoPanel;
     private javax.swing.ButtonGroup grupoBotones;
     private javax.swing.JLabel iteraciones;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
