@@ -41,7 +41,6 @@ public class PosiblesContagios implements MouseListener {
         while (p != null) {
             if (x < (p.getX() + 60) && (x > p.getX())) {
                 if (y >= p.getY() && y < p.getY() + 60) {
-                    System.out.println("entra");
                     Vertice v = (Vertice) vertices.getNodo(p.getId());
                     StringBuffer info = new StringBuffer();
                     info.append("ID: " + v.getId() + "\n");
