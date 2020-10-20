@@ -114,6 +114,7 @@ public class Grafo {
             vertices.setInfectado(true);
             paciente0 = true;
         }
+        conectarTodo();
     }
 
     public Vertice dfs(Vertice inicio) {
