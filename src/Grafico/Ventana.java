@@ -145,14 +145,14 @@ public class Ventana extends javax.swing.JFrame {
             if (v.isInfectado()) {
                 g.setColor(Color.black);
                 g.drawOval(posicionX, posicionY, ANCHO_NODO, ALTO_NODO);
-                g.setColor(Color.RED);
+                g.setColor(Color.red);
                 g.fillOval(posicionX, posicionY, ANCHO_NODO, ALTO_NODO);
-                g.setColor(Color.white);
+                g.setColor(Color.black);
                 g.drawString("usuario " + v.getId(), posicionX, posicionY + 30);
             } else {
                 g.setColor(Color.black);
                 g.drawOval(posicionX, posicionY, ANCHO_NODO, ALTO_NODO);
-                g.setColor(Color.GREEN);
+                g.setColor(Color.YELLOW);
                 g.fillOval(posicionX, posicionY, ANCHO_NODO, ALTO_NODO);
                 g.setColor(Color.BLACK);
                 g.drawString("usuario " + v.getId(), posicionX, posicionY + 30);
@@ -504,14 +504,14 @@ public class Ventana extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(47, 47, 47)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel1))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addComponent(reiniciar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
-                        .addComponent(Iteracion)
-                        .addGap(17, 17, 17)))
+                        .addGap(52, 52, 52)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(crear)
+                            .addComponent(reiniciar)
+                            .addComponent(Iteracion))))
+                .addGap(7, 7, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(verticeField, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -520,16 +520,11 @@ public class Ventana extends javax.swing.JFrame {
                         .addComponent(iteraciones)
                         .addGap(86, 86, 86))))
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(47, 47, 47)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(47, 47, 47)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(opcion2)
-                            .addComponent(opcion3)
-                            .addComponent(opcion1)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(104, 104, 104)
-                        .addComponent(crear)))
+                    .addComponent(opcion2)
+                    .addComponent(opcion3)
+                    .addComponent(opcion1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -548,12 +543,12 @@ public class Ventana extends javax.swing.JFrame {
                 .addGap(36, 36, 36)
                 .addComponent(crear)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(iteraciones, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(reiniciar)
-                        .addComponent(Iteracion)))
-                .addContainerGap(203, Short.MAX_VALUE))
+                .addComponent(iteraciones, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
+                .addComponent(Iteracion)
+                .addGap(52, 52, 52)
+                .addComponent(reiniciar)
+                .addContainerGap(85, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
