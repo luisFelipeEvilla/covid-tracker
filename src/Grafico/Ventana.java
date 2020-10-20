@@ -13,6 +13,8 @@ import covid.tracker.Vertice;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.logging.Level;
@@ -21,6 +23,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import sun.java2d.pipe.BufferedOpCodes;
+import utils.PosiblesContagios;
 
 /**
  *
@@ -38,8 +41,6 @@ public class Ventana extends javax.swing.JFrame {
     private final int ANCHO_NODO = 60;
     private final int ALTO_NODO = 60;
     int reguladorIteracion = 0;
-    int contadorParaAgregarColumna;
-    boolean grafoU = false;
     private Grafo cvt;
     private Punto posiciones;
 
@@ -57,7 +58,6 @@ public class Ventana extends javax.swing.JFrame {
         cvt = new Grafo();
 
         this.getContentPane().setBackground(Color.BLACK);
-        contadorParaAgregarColumna = 0;
 
         // configuracion del jpanel 
         this.titlePanel.setBackground(Color.red);
@@ -144,13 +144,18 @@ public class Ventana extends javax.swing.JFrame {
 
             if (v.isInfectado()) {
                 g.setColor(Color.black);
+                g.drawOval(posicionX, posicionY, ANCHO_NODO, ALTO_NODO);
+                g.setColor(Color.RED);
                 g.fillOval(posicionX, posicionY, ANCHO_NODO, ALTO_NODO);
                 g.setColor(Color.white);
                 g.drawString("usuario " + v.getId(), posicionX, posicionY + 30);
             } else {
                 g.setColor(Color.black);
-                g.drawString("usuario " + v.getId(), posicionX, posicionY + 30);
                 g.drawOval(posicionX, posicionY, ANCHO_NODO, ALTO_NODO);
+                g.setColor(Color.GREEN);
+                g.fillOval(posicionX, posicionY, ANCHO_NODO, ALTO_NODO);
+                g.setColor(Color.BLACK);
+                g.drawString("usuario " + v.getId(), posicionX, posicionY + 30);
             }
 
             contador++;
@@ -167,6 +172,7 @@ public class Ventana extends javax.swing.JFrame {
     public void dibujarAristas() {
         Graphics g = this.grafoPanel.getGraphics();
         Vertice v = cvt.getPtr();
+        Vertice v2 = null;
         int x1;
         int y1;
         int x2;
@@ -185,6 +191,9 @@ public class Ventana extends javax.swing.JFrame {
                 Punto coordenada2 = (Punto) posiciones.getNodo(a.getId());
                 x2 = coordenada2.getX();
                 y2 = coordenada2.getY();
+                v2 = (Vertice) cvt.getPtr().getNodo(a.getId());
+
+                g.setColor(Color.BLACK);
 
                 // nodo saliente se encuentra encima del entrante
                 if (y1 < y2) {
@@ -198,6 +207,11 @@ public class Ventana extends javax.swing.JFrame {
                         g.drawLine(x1, y1, x2, y2);
 
                         // pico de la flecha
+                        if (v2.isMascarilla()) {
+                            g.setColor(Color.green);
+                        } else {
+                            g.setColor(Color.RED);
+                        }
                         g.drawLine(x2 - 8, y2 - 8, x2, y2);
                         g.drawLine(x2 + 8, y2 - 8, x2, y2);
                     } else {
@@ -209,6 +223,11 @@ public class Ventana extends javax.swing.JFrame {
                             g.drawLine(x1, y1, x2, y2);
 
                             // pico de la flecha
+                            if (v2.isMascarilla()) {
+                                g.setColor(Color.green);
+                            } else {
+                                g.setColor(Color.RED);
+                            }
                             g.drawLine(x2, y2, x2 - 12, y2 - 8);
                             g.drawLine(x2, y2, x2 + 4, y2 - 8);
 
@@ -221,6 +240,11 @@ public class Ventana extends javax.swing.JFrame {
                             g.drawLine(x1, y1, x2, y2);
 
                             // pico de la flecha
+                            if (v2.isMascarilla()) {
+                                g.setColor(Color.green);
+                            } else {
+                                g.setColor(Color.RED);
+                            }
                             g.drawLine(x2 - 4, y2 - 8, x2, y2);
                             g.drawLine(x2 + 12, y2 - 8, x2, y2);
                         }
@@ -239,6 +263,11 @@ public class Ventana extends javax.swing.JFrame {
                             g.drawLine(x1, y1, x2, y2);
 
                             // pico de la flecha
+                            if (v2.isMascarilla()) {
+                                g.setColor(Color.green);
+                            } else {
+                                g.setColor(Color.RED);
+                            }
                             g.drawLine(x2 - 8, y2 - 8, x2, y2);
                             g.drawLine(x2 - 8, y2 + 8, x2, y2);
 
@@ -251,6 +280,11 @@ public class Ventana extends javax.swing.JFrame {
                             g.drawLine(x1, y1, x2, y2);
 
                             // pico de la flecha
+                            if (v2.isMascarilla()) {
+                                g.setColor(Color.green);
+                            } else {
+                                g.setColor(Color.RED);
+                            }
                             g.drawLine(x2 + 8, y2 - 8, x2, y2);
                             g.drawLine(x2 + 8, y2 + 8, x2, y2);
                         }
@@ -269,6 +303,11 @@ public class Ventana extends javax.swing.JFrame {
                             g.drawLine(x1, y1, x2, y2);
 
                             // pico de la flecha
+                            if (v2.isMascarilla()) {
+                                g.setColor(Color.green);
+                            } else {
+                                g.setColor(Color.RED);
+                            }
                             g.drawLine(x2 - 8, y2 + 8, x2, y2);
                             g.drawLine(x2 + 8, y2 + 8, x2, y2);
 
@@ -282,6 +321,11 @@ public class Ventana extends javax.swing.JFrame {
                                 g.drawLine(x1, y1, x2, y2);
 
                                 // pico de la flecha
+                                if (v2.isMascarilla()) {
+                                    g.setColor(Color.green);
+                                } else {
+                                    g.setColor(Color.RED);
+                                }
                                 g.drawLine(x2 - 8, y2 + 8, x2, y2);
                                 g.drawLine(x2 + 8, y2 + 8, x2, y2);
 
@@ -295,6 +339,11 @@ public class Ventana extends javax.swing.JFrame {
                                 g.drawLine(x1, y1, x2, y2);
 
                                 // pico de la flecha
+                                if (v2.isMascarilla()) {
+                                    g.setColor(Color.green);
+                                } else {
+                                    g.setColor(Color.RED);
+                                }
                                 g.drawLine(x2 - 8, y2 + 8, x2, y2);
                                 g.drawLine(x2 + 8, y2 + 8, x2, y2);
                             }
@@ -334,7 +383,7 @@ public class Ventana extends javax.swing.JFrame {
         opcion3 = new javax.swing.JRadioButton();
         Iteracion = new javax.swing.JButton();
         iteraciones = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        reiniciar = new javax.swing.JButton();
         crear = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -432,11 +481,11 @@ public class Ventana extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Reiniciar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        reiniciar.setBackground(new java.awt.Color(255, 255, 255));
+        reiniciar.setText("Reiniciar");
+        reiniciar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                reiniciarActionPerformed(evt);
             }
         });
 
@@ -459,7 +508,7 @@ public class Ventana extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(36, 36, 36)
-                        .addComponent(jButton1)
+                        .addComponent(reiniciar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                         .addComponent(Iteracion)
                         .addGap(17, 17, 17)))
@@ -502,7 +551,7 @@ public class Ventana extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(iteraciones, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton1)
+                        .addComponent(reiniciar)
                         .addComponent(Iteracion)))
                 .addContainerGap(203, Short.MAX_VALUE))
         );
@@ -547,7 +596,6 @@ public class Ventana extends javax.swing.JFrame {
         dibujarVertices();
         String label = "" + ++reguladorIteracion;
         this.iteraciones.setText(label);
-        cvt.listarVertices();
         cvt.mostrarInfectados();
         if (cvt.todosInfectados() && verticeField.getText().isEmpty() == false) {
             JOptionPane.showMessageDialog(null, "YA TODOS LOS USUARIOS TIENEN COVID-19");
@@ -570,7 +618,7 @@ public class Ventana extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_verticeFieldActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void reiniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reiniciarActionPerformed
         this.iteraciones.setText("");
         this.reguladorIteracion = 0;
         this.verticeField.setText("");
@@ -580,19 +628,23 @@ public class Ventana extends javax.swing.JFrame {
         this.grafoPanel.repaint();
         this.grupoBotones.clearSelection();
         crear.setEnabled(true);
+        cvt.setPaciente0(false);
+        Vertice.setIdGen(0);
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_reiniciarActionPerformed
 
     private void crearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearActionPerformed
         if (verticeField.getText().isEmpty() == false) {
             if (configuracion() != -1) {
                 cvt.setVertices(numeroValido());
                 cvt.generarGrafo();
-                
+
                 seleccionado();
                 this.dibujarVertices();
                 this.dibujarAristas();
                 crear.setEnabled(false);
+
+                grafoPanel.addMouseListener(new PosiblesContagios(cvt.getPtr(), posiciones));
             } else {
                 JOptionPane.showMessageDialog(null, "SELECCIONE MODALIDAD");
             }
@@ -644,7 +696,6 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JPanel grafoPanel;
     private javax.swing.ButtonGroup grupoBotones;
     private javax.swing.JLabel iteraciones;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
@@ -652,6 +703,7 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JRadioButton opcion1;
     private javax.swing.JRadioButton opcion2;
     private javax.swing.JRadioButton opcion3;
+    private javax.swing.JButton reiniciar;
     private javax.swing.JLabel title;
     private javax.swing.JPanel titlePanel;
     private javax.swing.JTextField verticeField;

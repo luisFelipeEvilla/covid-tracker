@@ -11,8 +11,12 @@ package covid.tracker;
  */
 public class Arista extends Nodo {
     
-    public Arista(int id) {
+    private final int distancia;
+    
+    
+    public Arista(int id, int distancia) {
         super(id);
+        this.distancia = distancia;
     }
 
     public int getId() {
@@ -30,6 +34,9 @@ public class Arista extends Nodo {
     public void setLink(Arista link) {
         this.link = link;
     }
-    
+
+    public int getDistancia() {
+        return distancia;
+    }
     
 }

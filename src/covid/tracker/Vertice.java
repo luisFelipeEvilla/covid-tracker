@@ -30,11 +30,11 @@ public class Vertice extends Nodo{
         this.aristas = original.getAristas();
     }
 
-    public void addArista(int id) {
+    public void addArista(int id, int distancia) {
         if (aristas == null) {
-            aristas = new Arista(id);
+            aristas = new Arista(id, distancia);
         } else {
-            aristas.addNode(new Arista(id));
+            aristas.addNode(new Arista(id, distancia));
         }
     }
     
@@ -104,6 +104,19 @@ public class Vertice extends Nodo{
 
     public void setInfectado(boolean infectado) {
         this.infectado = infectado;
+    }
+    
+    public int contarAristas() {
+        int contador = 0;
+        
+        Arista a = aristas;
+        
+        while (a != null) {
+            contador++;
+            a = a.getLink();
+        }
+        
+        return contador;
     }
 
 }

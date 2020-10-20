@@ -5,8 +5,11 @@ import covid.tracker.Vertice;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.HashSet;
+import java.util.Optional;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Stack;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -28,8 +31,6 @@ public class Grafo {
     private float PROBABILIDAD_PACIENTE_CERO;
     private final float PROBABILIDAD_MASCARILLA;
     private final float PROBABILIDAD_ARISTA;
-    private final float PROBABILIDAD_INFECTADO;
-    private final float PROTECCCION_MASCARILLA;
 
     public Grafo() {
         vertices = null;
@@ -38,14 +39,14 @@ public class Grafo {
         configuracion = 0;
         iteracion = 0;
         PROBABILIDAD_MASCARILLA = 1 / 2;
-        PROBABILIDAD_ARISTA = 0.69f;
-        PROBABILIDAD_INFECTADO = 1 / 2;
-        PROTECCCION_MASCARILLA = (float) 0.3;
+        PROBABILIDAD_ARISTA = 0.60f;
+
     }
 
     public void generarGrafo() {
         Random rand = new Random();
-        PROBABILIDAD_PACIENTE_CERO = 0.4f;
+        PROBABILIDAD_PACIENTE_CERO = 0.8f;
+        int distancia = 0;
 
         // crear vertice inicial
         if (numVertices > 0) {
@@ -57,39 +58,41 @@ public class Grafo {
             vertices.createVertice();
         }
 
-        Vertice v1 = vertices;
-        Vertice v2 = null;
-        Vertice v3 = null;
+        Vertice actual = vertices;
+        Vertice iterador = null;
+        Vertice anterior = actual;
         float dado = 0;
 
-        while (v1 != null) {
-            v2 = vertices;
+        while (actual != null) {
+            iterador = vertices;
 
             // genera las aristas aleatoriamente
-            while (v2 != null) {
-                if (v2.equals(v1)) {
-                    v2 = (Vertice) v2.getLink();
+            while (iterador != null) {
+                if (iterador.equals(actual)) {
+                    iterador = (Vertice) iterador.getLink();
                 } else {
                     dado = Math.round(rand.nextFloat() * 10);
                     dado = dado / 10;
 
                     if (dado >= PROBABILIDAD_ARISTA) {
-                        v1.addArista(v2.getId());
+                        distancia = (int) (Math.random() * 5);
+                        actual.addArista(iterador.getId(), distancia);
                     }
                 }
 
-                if (v2 != null) {
-                    v2 = (Vertice) v2.getLink();
+                if (iterador != null) {
+                    iterador = (Vertice) iterador.getLink();
                 }
             }
 
-            // si no posee ninguna arista, se le añade el nodo siguiente
-            if (v1.getAristas() == null) {
-                if (v1.getLink() != null) {
-                    v1.addArista(v1.getLink().getId());
+            // si no posee ninguna arista saliente, se le añade el nodo siguiente
+            if (actual.getAristas() == null) {
+                distancia = (int) (Math.random() * 5);
+                if (actual.getLink() != null) {
+                    actual.addArista(actual.getLink().getId(), distancia);
                 } else {
                     // si no tiene siguiente, el anterior
-                    v1.addArista(v3.getId());
+                    actual.addArista(anterior.getId(), distancia);
                 }
             }
 
@@ -98,18 +101,85 @@ public class Grafo {
                 dado = Math.round(rand.nextFloat() * 10);
                 dado = dado / 10;
                 if (dado > PROBABILIDAD_PACIENTE_CERO) {
-                    v1.setInfectado(true);
+                    actual.setInfectado(true);
                     paciente0 = true;
                 }
             }
 
-            v3 = v1;
-            v1 = (Vertice) v1.getLink();
+            anterior = actual;
+            actual = (Vertice) actual.getLink();
         }
 
         if (!paciente0) {
             vertices.setInfectado(true);
             paciente0 = true;
+        }
+    }
+
+    public Vertice dfs(Vertice inicio) {
+        Stack<Vertice> s = new Stack();
+
+        s.add(inicio);
+        Vertice visitados = new Vertice(inicio);
+        visitados.setLink(null);
+
+        while (!s.isEmpty()) {
+            Vertice v = s.pop();
+
+            Arista a = v.getAristas();
+
+            while (a != null) {
+                if (visitados.getNodo(a.getId()) == null) {
+                    Vertice w = (Vertice) vertices.getNodo(a.getId());
+                    visitados.addNode(w);
+                    s.add(w);
+                }
+                
+                a = a.getLink();
+                System.out.println("iteracion");
+            }
+            System.out.println("bucle principal");
+        }
+        
+        System.out.println("finalizado");
+        return visitados;
+    }
+
+    public void conectarTodo() {
+        Vertice actual = vertices;
+        Vertice anterior = actual;
+        Vertice iterador;
+        int distancia = 0;
+        Random rand = new Random();
+
+        // garantizar que no existe ningun nodo aislado
+        while (actual != null) {
+            iterador = vertices;
+            boolean aislado = true;
+            int id = rand.nextInt(numVertices + 1) + numVertices;
+            System.out.println(id);
+            // busca almenos un nodo que se pueda conectar con el nodo v1
+            while (iterador != null && aislado) {
+                if (iterador.getArista(actual.getId()) != null) {
+                    aislado = false;
+                }
+                iterador = (Vertice) iterador.getLink();
+            }
+
+            // si se encuentra aislado, se conecta a algun nodo
+            if (aislado) {
+                distancia = (int) (Math.random() * 5);
+                // se conecta con el nodo siguiente
+                if (actual.getLink() != null) {
+                    Vertice siguiente = (Vertice) actual.getLink();
+                    siguiente.addArista(actual.getId(), distancia);
+                } else {
+                    // si no tiene siguiente, el anterior
+                    anterior.addArista(actual.getId(), distancia);
+                }
+            }
+
+            actual = (Vertice) actual.getLink();
         }
     }
 
@@ -152,7 +222,7 @@ public class Grafo {
         // Nodo que infecta     
         Vertice v = infectados;
         //nodo que se va a infectar
-        Vertice v1 = v;
+        Vertice v1;
         Arista a = null;
         Random rand = new Random();
         float dado = 0;
@@ -164,12 +234,61 @@ public class Grafo {
                 v1 = (Vertice) vertices.getNodo(a.getId());
 
                 if (!v1.isInfectado()) {
-                    dado = Math.round(rand.nextFloat() * 10);
-                    dado = dado / 10;
+                    dado = rand.nextFloat();
 
-                    if (dado > PROBABILIDAD_INFECTADO + PROTECCCION_MASCARILLA) {
-                        v1.setInfectado(true);
+                    if (!v.isMascarilla()) {
+
+                        if (!v1.isMascarilla()) {
+
+                            if (a.getDistancia() > 2) {
+                                if (dado > 0.2) {
+                                    v1.setInfectado(true);
+                                }
+                            } else {
+                                if (dado > 0.1) {
+                                    v1.setInfectado(true);
+                                }
+                            }
+
+                        } else {
+                            if (a.getDistancia() > 2) {
+                                if (dado > 0.6) {
+                                    v1.setInfectado(true);
+                                }
+                            } else {
+                                if (dado > 0.4) {
+                                    v1.setInfectado(true);
+                                }
+                            }
+                        }
+                    } else {
+                        if (!v1.isMascarilla()) {
+
+                            if (a.getDistancia() > 2) {
+                                if (dado > 0.7) {
+                                    v1.setInfectado(true);
+                                }
+                            } else {
+                                if (dado > 0.6) {
+                                    v1.setInfectado(true);
+                                }
+                            }
+                        } else {
+
+                            if (a.getDistancia() > 2) {
+                                if (dado > 0.8) {
+                                    v1.setInfectado(true);
+                                }
+                            } else {
+
+                                if (dado > 0.7) {
+                                    v1.setInfectado(true);
+                                }
+                            }
+
+                        }
                     }
+
                 }
 
                 a = a.getLink();
@@ -227,35 +346,29 @@ public class Grafo {
     public void setVertices(int numVertices) {
         this.numVertices = numVertices;
     }
-    //Generar el grafo que el ususario inserta via txt
 
-    public void grafoUsuario(File f) throws FileNotFoundException {
-        boolean primero = true;
-        Scanner lectura = new Scanner(f);
-        PrintWriter pw = new PrintWriter(f);
-
-        int i = 0;
-        Vertice.setIdGen(0);
-        while (lectura.hasNext()) {
-            String linea = lectura.nextLine();
-            linea = linea.trim();
-            char array[] = linea.toCharArray();
-            if (primero) {
-                vertices = new Vertice();
-                //vertices.setId(array[i]);
-                //i++;
-                primero = false;
-            } else {
-                vertices.createVertice();
-                //vertices.setId(i);  
-            }
-            for (int j = 2; j < array.length; j++) {
-
-                if (array[j] != ',') {
-                    vertices.addArista(array[j]);
-                }
-            }
-
-        }
+    public void setPaciente0(boolean paciente0) {
+        this.paciente0 = paciente0;
     }
+
+    /**
+     * //Generar el grafo que el ususario inserta via txt
+     *
+     * public void grafoUsuario(File f) throws FileNotFoundException { boolean
+     * primero = true; Scanner lectura = new Scanner(f); PrintWriter pw = new
+     * PrintWriter(f);
+     *
+     * int i = 0; Vertice.setIdGen(0); while (lectura.hasNext()) { String linea
+     * = lectura.nextLine(); linea = linea.trim(); char array[] =
+     * linea.toCharArray(); if (primero) { vertices = new Vertice();
+     * //vertices.setId(array[i]); //i++; primero = false; } else {
+     * vertices.createVertice(); //vertices.setId(i); } for (int j = 2; j <
+     * array.length; j++) {
+     *
+     * if (array[j] != ',') { vertices.addArista(array[j]); } }
+     *
+     * }
+     * }
+     * *
+     */
 }
