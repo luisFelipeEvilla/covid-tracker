@@ -147,7 +147,7 @@ public class Ventana extends javax.swing.JFrame {
                 g.drawOval(posicionX, posicionY, ANCHO_NODO, ALTO_NODO);
                 g.setColor(Color.red);
                 g.fillOval(posicionX, posicionY, ANCHO_NODO, ALTO_NODO);
-                g.setColor(Color.black);
+                g.setColor(Color.white);
                 g.drawString("usuario " + v.getId(), posicionX, posicionY + 30);
             } else {
                 g.setColor(Color.black);
@@ -591,7 +591,6 @@ public class Ventana extends javax.swing.JFrame {
         dibujarVertices();
         String label = "" + ++reguladorIteracion;
         this.iteraciones.setText(label);
-        cvt.mostrarInfectados();
         if (cvt.todosInfectados() && verticeField.getText().isEmpty() == false) {
             JOptionPane.showMessageDialog(null, "YA TODOS LOS USUARIOS TIENEN COVID-19");
         }

@@ -28,14 +28,17 @@ public class PosiblesContagios implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent me) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent me) {
         int x = me.getX();
         int y = me.getY();
 
         Punto p = posiciones;
 
         while (p != null) {
-            System.out.println(x + "," + y);
-            System.out.println(p.getX() + ", " + p.getY());
             if (x < (p.getX() + 60) && (x > p.getX())) {
                 if (y >= p.getY() && y < p.getY() + 60) {
                     System.out.println("entra");
@@ -55,17 +58,12 @@ public class PosiblesContagios implements MouseListener {
                     }
 
                     info.append("\n");
-                    System.out.println(info);
                     JOptionPane.showMessageDialog(null, info);
                 }
 
             }
             p = (Punto) p.getLink();
         }
-    }
-
-    @Override
-    public void mousePressed(MouseEvent me) {
     }
 
     @Override
