@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
+import sun.java2d.pipe.BufferedOpCodes;
 
 /**
  *
@@ -30,33 +31,49 @@ public class Ventana extends javax.swing.JFrame {
     // CovidTracker cvt;
     Pdf generar;
     int p;
-    int x;
-    int y;
+    int posicionX;
+    int posicionY;
+    private final int DISTANCIA_NODOS_Y;
+    private final int DISTANCIA_NODOS_X;
+    private final int ANCHO_NODO = 60;
+    private final int ALTO_NODO = 60;
     int reguladorIteracion = 0;
-    Punto[] puntos;
     int contadorParaAgregarColumna;
     boolean grafoU = false;
     private Grafo cvt;
+    private Punto posiciones;
 
     public Ventana() {
-
         initComponents();
-        puntos = new Punto[70];
+        posiciones = null;
         p = 0;
-        x = 40;
-        y = this.grafoPanel.getHeight() / 6;
+        this.DISTANCIA_NODOS_X = 150;
+        this.DISTANCIA_NODOS_Y = this.grafoPanel.getHeight() / 3;
+
+        // posicion desde donde se comienza a dibujar los vertices;
+        posicionX = 40;
+        posicionY = this.grafoPanel.getHeight() / 6;
+
         cvt = new Grafo();
+
         this.getContentPane().setBackground(Color.BLACK);
         contadorParaAgregarColumna = 0;
+
+        // configuracion del jpanel 
         this.titlePanel.setBackground(Color.red);
         this.grafoPanel.setBackground(new Color(255, 255, 255));
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setLocationRelativeTo(null);
+
+        //cofiguracion de botones
         grupoBotones.add(opcion1);
         grupoBotones.add(opcion2);
         grupoBotones.add(opcion3);
+
+        this.setLocationRelativeTo(null);
+
     }
 
+    // aplica la configuracion de aplicacion de mascarilla
     public void seleccionado() {
         if (this.opcion1.isSelected()) {
             return;
@@ -68,6 +85,7 @@ public class Ventana extends javax.swing.JFrame {
 
     }
 
+    // lee la modalidad de aplicacion de mascarilla seleccionada, y desactiva las otras
     public int configuracion() {
         if (this.opcion1.isSelected()) {
             this.opcion2.setEnabled(false);
@@ -85,6 +103,7 @@ public class Ventana extends javax.swing.JFrame {
         return -1;
     }
 
+    //lee el num de vertices
     public int numeroValido() {
         int n = Integer.parseInt(this.verticeField.getText());
         while (n <= 0) {
@@ -94,147 +113,198 @@ public class Ventana extends javax.swing.JFrame {
         return n;
     }
 
+    // Dibuja los vertices
     public void dibujarVertices(int opcion) {
         Graphics g = this.grafoPanel.getGraphics();
         Vertice v = cvt.getPtr();
-        int op = 1;
-        int y2;
-        if (opcion == 1) {
-            while (v != null) {
-                Punto punto = new Punto();
-                switch (op) {
-                    case 1:
-                        y2 = this.y * 3;
-                        if (v.isInfectado()) {
-                            g.fillOval(x, y2, 60, 60);
-                            g.setColor(Color.white);
-                            g.drawString("usuario " + v.getId(), x, y2 + 30);
-                            g.setColor(Color.black);
-                        } else {
-                            g.drawOval(x, y2, 60, 60);
-                            g.drawString("usuario " + v.getId(), x + 5, y2 + 30);
-                        }
-                        punto.setCordenada(x + 30, y2 + 30);
-                        puntos[p] = punto;
-                        p++;
-                        op++;
-                        break;
-                    case 2:
-                        y2 = this.y * 2;
-                        if (v.isInfectado()) {
-                            g.fillOval(x, y2, 60, 60);
-                            g.setColor(Color.white);
-                            g.drawString("usuario " + v.getId(), x, y2 + 30);
-                            g.setColor(Color.black);
 
-                        } else {
-                            g.drawOval(x, y2, 60, 60);
-                            g.drawString("usuario " + v.getId(), x + 5, y2 + 30);
-                        }
-                        punto.setCordenada(x + 30, y2 + 30);
-                        puntos[p] = punto;
-                        p++;
-                        op++;
-                        break;
-                    case 3:
-                        y2 = this.y * 4;
-                        if (v.isInfectado()) {
-                            g.fillOval(x, y2, 60, 60);
-                            g.setColor(Color.white);
-                            g.drawString("usuario " + v.getId(), x, y2 + 30);
-                            g.setColor(Color.black);
+        int contador = 0;
 
-                        } else {
-                            g.drawOval(x, y2, 60, 60);
-                            g.drawString("usuario " + v.getId(), x + 5, y2 + 30);
-                        }
-                        punto.setCordenada(x + 30, y2 + 30);
-                        puntos[p] = punto;
-                        p++;
-                        this.x = this.x + 150;
-                        op = 1;
-                        break;
-                }
+        while (v != null) {
 
-                v = (Vertice) v.getLink();
+            switch (contador) {
+                case 0:
+                    posicionY = this.grafoPanel.getHeight() / 2 - 100;
+                    break;
+                case 1:
+                    posicionY -= DISTANCIA_NODOS_Y;
+                    break;
+                case 2:
+                    posicionY += DISTANCIA_NODOS_Y * 2;
+                    break;
+
             }
-            this.x = 40;
-        } else {
-            while (v != null) {
-                switch (op) {
-                    case 1:
-                        y2 = this.y * 3;
-                        if (v.isInfectado()) {
-                            g.fillOval(x, y2, 60, 60);
-                            g.setColor(Color.white);
-                            g.drawString("usuario " + v.getId(), x, y2 + 30);
-                            g.setColor(Color.black);
-                        }
-                        // g.drawString("usuario " + v.getId(), x + 5, y2 + 30);
-                        op++;
-                        break;
-                    case 2:
-                        y2 = this.y * 2;
-                        if (v.isInfectado()) {
-                            g.fillOval(x, y2, 60, 60);
-                            g.setColor(Color.white);
-                            g.drawString("usuario " + v.getId(), x, y2 + 30);
-                            g.setColor(Color.black);
 
-                        }
-                        op++;
-                        break;
-                    case 3:
-                        y2 = this.y * 4;
-                        if (v.isInfectado()) {
-                            g.fillOval(x, y2, 60, 60);
-                            g.setColor(Color.white);
-                            g.drawString("usuario " + v.getId(), x, y2 + 30);
-                            g.setColor(Color.black);
-
-                        }
-                        this.x = this.x + 150;
-                        op = 1;
-                        break;
-                }
-
-                v = (Vertice) v.getLink();
+            if (posiciones == null) {
+                posiciones = new Punto(v.getId(), posicionX, posicionY);
+            } else {
+                Punto p = new Punto(v.getId(), posicionX, posicionY);
+                posiciones.addNode(p);
             }
-            this.x = 40;
+
+            if (v.isInfectado()) {
+                g.fillOval(posicionX, posicionY, ANCHO_NODO, ALTO_NODO);
+                g.setColor(Color.white);
+                g.drawString("usuario " + v.getId(), posicionX, posicionY + 30);
+            } else {
+                g.setColor(Color.black);
+                g.drawString("usuario " + v.getId(), posicionX, posicionY + 30);
+                g.drawOval(posicionX, posicionY, ANCHO_NODO, ALTO_NODO);
+            }
+
+            contador++;
+
+            if (contador > 2) {
+                posicionX += DISTANCIA_NODOS_X;
+                contador = 0;
+            }
+
+            v = (Vertice) v.getLink();
         }
     }
 
     public void dibujarAristas() {
         Graphics g = this.grafoPanel.getGraphics();
         Vertice v = cvt.getPtr();
+        int x1;
+        int y1;
+        int x2;
+        int y2;
+
         while (v != null) {
             Arista a = v.getAristas();
+
             while (a != null) {
-                Punto coordenada1 = puntos[a.getId()];
-                Punto coordenada2 = puntos[v.getId()];
-//                 switch(cuadrante(coordenada1,coordenada2)){
-//                     case 1:
-//                         coordenada1.setX(coordenada1.x+30);
-//                         coordenada2.setY(coordenada2.y+30);
-//                     break;
-//                     case 2:
-//                         coordenada1.setX(coordenada1.x-30);
-//                         coordenada2.setY(coordenada2.y+30);
-//                     break;
-//                     case 3:
-//                         coordenada1.setX(coordenada1.x-30);
-//                          coordenada2.setY(coordenada2.y-30);
-//                     break;
-//                     case 4:
-//                         coordenada1.setX(coordenada1.x+30);
-//                         coordenada2.setY(coordenada2.y-30);
-//                     break;
-//                 }        
-                g.drawLine(coordenada1.x, coordenada1.y, coordenada2.x, coordenada2.y);
-                g.drawLine(coordenada2.x, coordenada2.y, coordenada2.x + 8, coordenada2.y + 6);
-                g.drawLine(coordenada2.x, coordenada2.y, coordenada2.x - 8, coordenada2.y + 6);
+                // de donde sale la arista
+                Punto coordenada1 = (Punto) posiciones.getNodo(v.getId());
+                x1 = coordenada1.getX();
+                y1 = coordenada1.getY();
+
+                // a donde entra
+                Punto coordenada2 = (Punto) posiciones.getNodo(a.getId());
+                x2 = coordenada2.getX();
+                y2 = coordenada2.getY();
+
+                // nodo saliente se encuentra encima del entrante
+                if (y1 < y2) {
+                    y1 += ALTO_NODO + 15;
+                    // justo encima
+                    if (x1 == x2) {
+                        x1 += ANCHO_NODO/2;
+                        x2 += ANCHO_NODO/2;
+                        y2 -= 10;
+                        // cuerpo de la flecha
+                        g.drawLine(x1, y1, x2, y2);
+
+                        // pico de la flecha
+                        g.drawLine(x2 - 8, y2 - 8, x2, y2);
+                        g.drawLine(x2 + 8, y2 - 8, x2, y2);
+                    } else {
+                        // encima a la izquierda
+                        if (x1 < x2) {
+                            x1 += ANCHO_NODO;
+                            
+                            // cuerpo de la flecha
+                            g.drawLine(x1, y1, x2, y2);
+
+                            // pico de la flecha
+                            g.drawLine(x2, y2, x2 - 12, y2 -8);
+                            g.drawLine(x2, y2, x2 + 4, y2 - 8);
+                           
+                         // encima a la derecha   
+                        } else {
+                            x2 += ANCHO_NODO;
+                            y2 -= 10;
+                            y1 -= 10;
+                            // cuerpo de la flecha
+                            g.drawLine(x1, y1, x2, y2);
+
+                            // pico de la flecha
+                            g.drawLine(x2 - 4, y2 - 8, x2, y2);
+                            g.drawLine(x2 + 12, y2 - 8, x2, y2);
+                        }
+                    }
+                } else {
+                    // a la misma altura
+                    if (y1 == y2) {
+                        y1 += ALTO_NODO/2;
+                        y2 += ALTO_NODO/2;
+
+                        // a la izquierda
+                        if (x1 < x2) {
+                            x1 += ANCHO_NODO + 10;
+                            x2 -= 10;
+                            // cuerpo de la flecha
+                            g.drawLine(x1, y1, x2, y2);
+
+                            // pico de la flecha
+                            g.drawLine(x2 - 8, y2 - 8, x2, y2);
+                            g.drawLine(x2 - 8, y2 + 8, x2, y2);
+                            
+                            // a la derecha
+                        } else {
+                            x1 -= 10;
+                            x2 += ANCHO_NODO + 10;
+
+                            // cuerpo de la flecha
+                            g.drawLine(x1, y1, x2, y2);
+
+                            // pico de la flecha
+                            g.drawLine(x2 + 8, y2 - 8, x2, y2);
+                            g.drawLine(x2 + 8, y2 + 8, x2, y2);
+                        }
+                        
+                        // por debajo
+                    } else {
+                        y1 -= 10;
+                        
+                        //  justo debajo
+                        if (x1 == x2) {
+                            x1 += ANCHO_NODO / 2;
+                            x2 += ANCHO_NODO /2 ;
+                            y2 += ALTO_NODO + 10;
+                            
+                            // cuerpo de la flecha
+                            g.drawLine(x1, y1, x2, y2);
+
+                            // pico de la flecha
+                            g.drawLine(x2 - 8, y2 + 8, x2, y2);
+                            g.drawLine(x2 + 8, y2 + 8, x2, y2);
+                            
+                            // debajo a la izquierda
+                        } else {
+                            if (x1 < x2) {
+                                x1 += ANCHO_NODO;
+                                x2 -= 10;
+                                y2 += ALTO_NODO;
+                                // cuerpo de la flecha
+                                g.drawLine(x1, y1, x2, y2);
+
+                                // pico de la flecha
+                                g.drawLine(x2 - 8, y2 + 8, x2, y2);
+                                g.drawLine(x2 + 8, y2 + 8, x2, y2);
+                                
+                                // debajo a la derecha
+                            } else {
+                                x2 += ANCHO_NODO  + 10;
+                                x1 += 10;
+                                y2 += ALTO_NODO + 10;
+                                
+                                // cuerpo de la flecha
+                                g.drawLine(x1, y1, x2, y2);
+
+                                // pico de la flecha
+                                g.drawLine(x2 - 8, y2 + 8, x2, y2);
+                                g.drawLine(x2 + 8, y2 + 8, x2, y2);
+                            }
+                        }
+                    }
+                }
+
+                // punta de la flecha
                 a = a.getLink();
             }
+
             v = (Vertice) v.getLink();
         }
 

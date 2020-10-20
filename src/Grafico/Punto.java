@@ -5,20 +5,21 @@
  */
 package Grafico;
 
+import covid.tracker.Nodo;
+
 /**
  *
  * @author JPPM
  */
-public class Punto {
+public class Punto extends Nodo{
     int x , y;
 
-    public Punto(int x , int y) {
+    public Punto(int id, int x , int y) {
+        super(id);
         this.x=x;
         this.y=y;
     }
-    public Punto(){
-        
-    }
+
     public void setCordenada(int x , int y){
         this.x=  x ;
         this.y = y;

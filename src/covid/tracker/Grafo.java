@@ -38,7 +38,7 @@ public class Grafo {
         configuracion = 0;
         iteracion = 0;
         PROBABILIDAD_MASCARILLA = 1 / 2;
-        PROBABILIDAD_ARISTA = 1 / 4;
+        PROBABILIDAD_ARISTA = 0.5f;
         PROBABILIDAD_INFECTADO = 1 / 2;
         PROTECCCION_MASCARILLA = (float) 0.3;
     }
@@ -111,7 +111,6 @@ public class Grafo {
             vertices.setInfectado(true);
             paciente0 = true;
         }
-
     }
 
     public void aplicarMascarillaAleatorio() {
@@ -229,34 +228,34 @@ public class Grafo {
         this.numVertices = numVertices;
     }
     //Generar el grafo que el ususario inserta via txt
-    
-    public void grafoUsuario(File f) throws FileNotFoundException{
-        boolean primero=true;
-        Scanner lectura  = new Scanner(f);
+
+    public void grafoUsuario(File f) throws FileNotFoundException {
+        boolean primero = true;
+        Scanner lectura = new Scanner(f);
         PrintWriter pw = new PrintWriter(f);
-       
-        int i=0;
+
+        int i = 0;
         Vertice.setIdGen(0);
-        while(lectura.hasNext()){
-             String linea = lectura.nextLine();
+        while (lectura.hasNext()) {
+            String linea = lectura.nextLine();
             linea = linea.trim();
             char array[] = linea.toCharArray();
-            if(primero){
+            if (primero) {
                 vertices = new Vertice();
                 //vertices.setId(array[i]);
                 //i++;
-                primero=false;
-            }else{
+                primero = false;
+            } else {
                 vertices.createVertice();
                 //vertices.setId(i);  
             }
             for (int j = 2; j < array.length; j++) {
-                
-                if(array[j]!=','){
+
+                if (array[j] != ',') {
                     vertices.addArista(array[j]);
                 }
             }
-            
+
         }
     }
 }
