@@ -32,7 +32,6 @@ import utils.PosiblesContagios;
 public class Ventana extends javax.swing.JFrame {
 
     // CovidTracker cvt;
-    Pdf generar;
     int p;
     int posicionX;
     int posicionY;
@@ -66,8 +65,8 @@ public class Ventana extends javax.swing.JFrame {
         this.setResizable(false);
         
         //cofiguracion de botones
-        grupoBotones.add(opcion1);
         grupoBotones.add(opcion2);
+        grupoBotones.add(opcion1);
         grupoBotones.add(opcion3);
 
         this.setLocationRelativeTo(null);
@@ -88,17 +87,17 @@ public class Ventana extends javax.swing.JFrame {
 
     // lee la modalidad de aplicacion de mascarilla seleccionada, y desactiva las otras
     public int configuracion() {
-        if (this.opcion1.isSelected()) {
-            this.opcion2.setEnabled(false);
+        if (this.opcion2.isSelected()) {
+            this.opcion1.setEnabled(false);
             this.opcion3.setEnabled(false);
             return 1;
-        } else if (this.opcion2.isSelected()) {
-            this.opcion1.setEnabled(false);
+        } else if (this.opcion1.isSelected()) {
+            this.opcion2.setEnabled(false);
             this.opcion3.setEnabled(false);
             return 2;
         } else if (this.opcion3.isSelected()) {
-            this.opcion1.setEnabled(false);
             this.opcion2.setEnabled(false);
+            this.opcion1.setEnabled(false);
             return 3;
         }
         return -1;
@@ -378,8 +377,8 @@ public class Ventana extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         verticeField = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        opcion2 = new javax.swing.JRadioButton();
         opcion1 = new javax.swing.JRadioButton();
+        opcion2 = new javax.swing.JRadioButton();
         opcion3 = new javax.swing.JRadioButton();
         Iteracion = new javax.swing.JButton();
         iteraciones = new javax.swing.JLabel();
@@ -438,21 +437,21 @@ public class Ventana extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Times New Roman", 2, 18)); // NOI18N
         jLabel1.setText("Vertices");
 
-        opcion2.setBackground(new java.awt.Color(255, 255, 255));
-        opcion2.setFont(new java.awt.Font("Times New Roman", 2, 18)); // NOI18N
-        opcion2.setText("Sin Mascarilla");
-        opcion2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                opcion2ActionPerformed(evt);
-            }
-        });
-
         opcion1.setBackground(new java.awt.Color(255, 255, 255));
         opcion1.setFont(new java.awt.Font("Times New Roman", 2, 18)); // NOI18N
-        opcion1.setText("Mascarilla");
+        opcion1.setText("Sin Mascarilla");
         opcion1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 opcion1ActionPerformed(evt);
+            }
+        });
+
+        opcion2.setBackground(new java.awt.Color(255, 255, 255));
+        opcion2.setFont(new java.awt.Font("Times New Roman", 2, 18)); // NOI18N
+        opcion2.setText("Mascarilla");
+        opcion2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opcion2ActionPerformed(evt);
             }
         });
 
@@ -510,11 +509,11 @@ public class Ventana extends javax.swing.JFrame {
                     .addComponent(Iteracion)
                     .addComponent(crear)
                     .addComponent(opcion3)
-                    .addComponent(opcion1)
+                    .addComponent(opcion2)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(iteraciones, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(opcion2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(opcion1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -525,9 +524,9 @@ public class Ventana extends javax.swing.JFrame {
                     .addComponent(verticeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGap(36, 36, 36)
-                .addComponent(opcion2)
-                .addGap(18, 18, 18)
                 .addComponent(opcion1)
+                .addGap(18, 18, 18)
+                .addComponent(opcion2)
                 .addGap(18, 18, 18)
                 .addComponent(opcion3)
                 .addGap(27, 27, 27)
@@ -590,13 +589,13 @@ public class Ventana extends javax.swing.JFrame {
         // cvt.aplicarMascarillaAleatorio();
     }//GEN-LAST:event_opcion3ActionPerformed
 
-    private void opcion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcion1ActionPerformed
-        //cvt.aplicarMascarilla();
-    }//GEN-LAST:event_opcion1ActionPerformed
-
     private void opcion2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcion2ActionPerformed
-
+        //cvt.aplicarMascarilla();
     }//GEN-LAST:event_opcion2ActionPerformed
+
+    private void opcion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcion1ActionPerformed
+
+    }//GEN-LAST:event_opcion1ActionPerformed
 
     private void verticeFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verticeFieldActionPerformed
         // TODO add your handling code here:
@@ -606,8 +605,8 @@ public class Ventana extends javax.swing.JFrame {
         this.iteraciones.setText("");
         this.reguladorIteracion = 0;
         this.verticeField.setText("");
-        this.opcion1.setEnabled(true);
         this.opcion2.setEnabled(true);
+        this.opcion1.setEnabled(true);
         this.opcion3.setEnabled(true);
         this.grafoPanel.repaint();
         this.grupoBotones.clearSelection();
