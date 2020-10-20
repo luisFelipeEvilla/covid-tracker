@@ -158,7 +158,6 @@ public class Grafo {
             iterador = vertices;
             boolean aislado = true;
             int id = rand.nextInt(numVertices + 1) + numVertices;
-            System.out.println(id);
             // busca almenos un nodo que se pueda conectar con el nodo v1
             while (iterador != null && aislado) {
                 if (iterador.getArista(actual.getId()) != null) {
