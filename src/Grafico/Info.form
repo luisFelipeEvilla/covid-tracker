@@ -131,9 +131,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="editarId">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel5"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
@@ -141,9 +138,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="editarMascarilla">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel5"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
@@ -151,14 +145,8 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="editarInfectado">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel5"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="editarConexiones">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel5"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>

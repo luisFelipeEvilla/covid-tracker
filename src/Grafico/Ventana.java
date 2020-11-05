@@ -32,6 +32,7 @@ import utils.PosiblesContagios;
 public class Ventana extends javax.swing.JFrame {
 
     // CovidTracker cvt;
+    Emergencia3 e3;
     Emergencia1 e ;
     Emergencia2 e2;
     int p;
@@ -639,7 +640,10 @@ public class Ventana extends javax.swing.JFrame {
         String label = "Iteracion: " + ++reguladorIteracion;
         this.iteraciones.setText(label);
         if (cvt.todosInfectados() && verticeField.getText().isEmpty() == false) {
-            JOptionPane.showMessageDialog(null, "YA TODOS LOS USUARIOS TIENEN COVID-19");
+            //JOptionPane.showMessageDialog(null, "YA TODOS LOS USUARIOS TIENEN COVID-19");
+            e3 = new Emergencia3();
+            e3.setVisible(true);
+            
         }
     }//GEN-LAST:event_IteracionActionPerformed
 

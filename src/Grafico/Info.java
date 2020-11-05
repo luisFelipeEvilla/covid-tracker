@@ -89,17 +89,9 @@ public class Info extends javax.swing.JFrame {
 
         jLabel1.setText("Id:");
 
-        editarId.setText("jLabel5");
-
         jLabel2.setText("Mascarilla:");
 
-        editarMascarilla.setText("jLabel5");
-
         jLabel3.setText("Infectado");
-
-        editarInfectado.setText("jLabel5");
-
-        editarConexiones.setText("jLabel5");
 
         jLabel4.setText("Conexiones");
 
