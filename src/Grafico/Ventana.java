@@ -42,7 +42,9 @@ public class Ventana extends javax.swing.JFrame {
     int reguladorIteracion = 0;
     private Grafo cvt;
     private Punto posiciones;
-
+    Color xx = new Color(255, 89, 94);
+    Color xx2 = new Color(138, 201, 38);
+    MainMenu m ;
     public Ventana() {
         initComponents();
         posiciones = null;
@@ -56,10 +58,10 @@ public class Ventana extends javax.swing.JFrame {
 
         cvt = new Grafo();
 
-        this.getContentPane().setBackground(Color.BLACK);
+        this.getContentPane().setBackground(new Color(106, 76, 147));
         
         // configuracion del jpanel 
-        this.titlePanel.setBackground(Color.red);
+       // this.titlePanel.setBackground(Color.red);
         this.grafoPanel.setBackground(new Color(255, 255, 255));
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setResizable(false);
@@ -145,14 +147,14 @@ public class Ventana extends javax.swing.JFrame {
             if (v.isInfectado()) {
                 g.setColor(Color.black);
                 g.drawOval(posicionX, posicionY, ANCHO_NODO, ALTO_NODO);
-                g.setColor(Color.red);
+                g.setColor(xx);
                 g.fillOval(posicionX, posicionY, ANCHO_NODO, ALTO_NODO);
                 g.setColor(Color.white);
                 g.drawString("usuario " + v.getId(), posicionX, posicionY + 30);
             } else {
                 g.setColor(Color.black);
                 g.drawOval(posicionX, posicionY, ANCHO_NODO, ALTO_NODO);
-                g.setColor(Color.YELLOW);
+                g.setColor(xx2);
                 g.fillOval(posicionX, posicionY, ANCHO_NODO, ALTO_NODO);
                 g.setColor(Color.BLACK);
                 g.drawString("usuario " + v.getId(), posicionX, posicionY + 30);
@@ -210,7 +212,7 @@ public class Ventana extends javax.swing.JFrame {
                         if (v2.isMascarilla()) {
                             g.setColor(Color.green);
                         } else {
-                            g.setColor(Color.RED);
+                            g.setColor(xx);
                         }
                         g.drawLine(x2 - 8, y2 - 8, x2, y2);
                         g.drawLine(x2 + 8, y2 - 8, x2, y2);
@@ -226,7 +228,7 @@ public class Ventana extends javax.swing.JFrame {
                             if (v2.isMascarilla()) {
                                 g.setColor(Color.green);
                             } else {
-                                g.setColor(Color.RED);
+                                g.setColor(xx);
                             }
                             g.drawLine(x2, y2, x2 - 12, y2 - 8);
                             g.drawLine(x2, y2, x2 + 4, y2 - 8);
@@ -243,7 +245,7 @@ public class Ventana extends javax.swing.JFrame {
                             if (v2.isMascarilla()) {
                                 g.setColor(Color.green);
                             } else {
-                                g.setColor(Color.RED);
+                                g.setColor(xx);
                             }
                             g.drawLine(x2 - 4, y2 - 8, x2, y2);
                             g.drawLine(x2 + 12, y2 - 8, x2, y2);
@@ -266,7 +268,7 @@ public class Ventana extends javax.swing.JFrame {
                             if (v2.isMascarilla()) {
                                 g.setColor(Color.green);
                             } else {
-                                g.setColor(Color.RED);
+                                g.setColor(xx);
                             }
                             g.drawLine(x2 - 8, y2 - 8, x2, y2);
                             g.drawLine(x2 - 8, y2 + 8, x2, y2);
@@ -283,7 +285,7 @@ public class Ventana extends javax.swing.JFrame {
                             if (v2.isMascarilla()) {
                                 g.setColor(Color.green);
                             } else {
-                                g.setColor(Color.RED);
+                                g.setColor(xx);
                             }
                             g.drawLine(x2 + 8, y2 - 8, x2, y2);
                             g.drawLine(x2 + 8, y2 + 8, x2, y2);
@@ -306,7 +308,7 @@ public class Ventana extends javax.swing.JFrame {
                             if (v2.isMascarilla()) {
                                 g.setColor(Color.green);
                             } else {
-                                g.setColor(Color.RED);
+                                g.setColor(xx);
                             }
                             g.drawLine(x2 - 8, y2 + 8, x2, y2);
                             g.drawLine(x2 + 8, y2 + 8, x2, y2);
@@ -324,7 +326,7 @@ public class Ventana extends javax.swing.JFrame {
                                 if (v2.isMascarilla()) {
                                     g.setColor(Color.green);
                                 } else {
-                                    g.setColor(Color.RED);
+                                    g.setColor(xx);
                                 }
                                 g.drawLine(x2 - 8, y2 + 8, x2, y2);
                                 g.drawLine(x2 + 8, y2 + 8, x2, y2);
@@ -342,7 +344,7 @@ public class Ventana extends javax.swing.JFrame {
                                 if (v2.isMascarilla()) {
                                     g.setColor(Color.green);
                                 } else {
-                                    g.setColor(Color.RED);
+                                    g.setColor(xx);
                                 }
                                 g.drawLine(x2 - 8, y2 + 8, x2, y2);
                                 g.drawLine(x2 + 8, y2 + 8, x2, y2);
@@ -372,8 +374,6 @@ public class Ventana extends javax.swing.JFrame {
         grupoBotones = new javax.swing.ButtonGroup();
         grafoPanel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        titlePanel = new javax.swing.JPanel();
-        title = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         verticeField = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -385,10 +385,18 @@ public class Ventana extends javax.swing.JFrame {
         reiniciar = new javax.swing.JButton();
         crear = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        panelBack = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
+        setUndecorated(true);
         setSize(new java.awt.Dimension(600, 600));
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                formMouseEntered(evt);
+            }
+        });
 
         grafoPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 5));
 
@@ -396,36 +404,15 @@ public class Ventana extends javax.swing.JFrame {
         grafoPanel.setLayout(grafoPanelLayout);
         grafoPanelLayout.setHorizontalGroup(
             grafoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 982, Short.MAX_VALUE)
+            .addGap(0, 938, Short.MAX_VALUE)
         );
         grafoPanelLayout.setVerticalGroup(
             grafoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 578, Short.MAX_VALUE)
         );
 
-        title.setFont(new java.awt.Font("Verdana", 3, 48)); // NOI18N
-        title.setForeground(new java.awt.Color(240, 240, 240));
-        title.setText("COVID TRACKER");
-
-        javax.swing.GroupLayout titlePanelLayout = new javax.swing.GroupLayout(titlePanel);
-        titlePanel.setLayout(titlePanelLayout);
-        titlePanelLayout.setHorizontalGroup(
-            titlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(titlePanelLayout.createSequentialGroup()
-                .addGap(357, 357, 357)
-                .addComponent(title)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        titlePanelLayout.setVerticalGroup(
-            titlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(titlePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(title)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jPanel2.setBackground(new java.awt.Color(153, 153, 153));
-        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 4));
+        jPanel2.setBackground(new java.awt.Color(106, 76, 147));
+        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 0));
 
         verticeField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         verticeField.addActionListener(new java.awt.event.ActionListener() {
@@ -437,7 +424,7 @@ public class Ventana extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Times New Roman", 2, 18)); // NOI18N
         jLabel1.setText("Vertices");
 
-        opcion1.setBackground(new java.awt.Color(255, 255, 255));
+        opcion1.setBackground(new java.awt.Color(135, 105, 177));
         opcion1.setFont(new java.awt.Font("Times New Roman", 2, 18)); // NOI18N
         opcion1.setText("Sin Mascarilla");
         opcion1.addActionListener(new java.awt.event.ActionListener() {
@@ -446,7 +433,7 @@ public class Ventana extends javax.swing.JFrame {
             }
         });
 
-        opcion2.setBackground(new java.awt.Color(255, 255, 255));
+        opcion2.setBackground(new java.awt.Color(135, 105, 177));
         opcion2.setFont(new java.awt.Font("Times New Roman", 2, 18)); // NOI18N
         opcion2.setText("Mascarilla");
         opcion2.addActionListener(new java.awt.event.ActionListener() {
@@ -455,7 +442,7 @@ public class Ventana extends javax.swing.JFrame {
             }
         });
 
-        opcion3.setBackground(new java.awt.Color(255, 255, 255));
+        opcion3.setBackground(new java.awt.Color(135, 105, 177));
         opcion3.setFont(new java.awt.Font("Times New Roman", 2, 18)); // NOI18N
         opcion3.setText("Aleatorio");
         opcion3.addActionListener(new java.awt.event.ActionListener() {
@@ -464,7 +451,7 @@ public class Ventana extends javax.swing.JFrame {
             }
         });
 
-        Iteracion.setBackground(new java.awt.Color(255, 255, 255));
+        Iteracion.setBackground(new java.awt.Color(25, 130, 196));
         Iteracion.setText("Iterar");
         Iteracion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -475,7 +462,7 @@ public class Ventana extends javax.swing.JFrame {
         iteraciones.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         iteraciones.setForeground(new java.awt.Color(255, 255, 255));
 
-        reiniciar.setBackground(new java.awt.Color(255, 255, 255));
+        reiniciar.setBackground(new java.awt.Color(255, 202, 58));
         reiniciar.setText("Reiniciar");
         reiniciar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -483,6 +470,7 @@ public class Ventana extends javax.swing.JFrame {
             }
         });
 
+        crear.setBackground(new java.awt.Color(255, 89, 94));
         crear.setText("Crear");
         crear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -497,23 +485,24 @@ public class Ventana extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(47, 47, 47)
+                .addContainerGap(13, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(verticeField, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(48, 48, 48))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(reiniciar)
-                    .addComponent(Iteracion)
-                    .addComponent(crear)
                     .addComponent(opcion3)
                     .addComponent(opcion2)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(iteraciones, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(opcion1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(opcion1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel4)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(crear, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Iteracion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(reiniciar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -537,8 +526,36 @@ public class Ventana extends javax.swing.JFrame {
                 .addComponent(reiniciar)
                 .addGap(18, 18, 18)
                 .addComponent(iteraciones, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42))
+        );
+
+        panelBack.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                panelBackMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                panelBackMouseEntered(evt);
+            }
+        });
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/back-arrow.png"))); // NOI18N
+
+        javax.swing.GroupLayout panelBackLayout = new javax.swing.GroupLayout(panelBack);
+        panelBack.setLayout(panelBackLayout);
+        panelBackLayout.setHorizontalGroup(
+            panelBackLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBackLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panelBackLayout.setVerticalGroup(
+            panelBackLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBackLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel3)
                 .addContainerGap())
         );
 
@@ -546,34 +563,68 @@ public class Ventana extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(titlePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(45, 45, 45)
                 .addComponent(grafoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addComponent(jLabel2))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(panelBack, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(titlePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(grafoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 535, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(413, 413, 413)
-                        .addComponent(jLabel2)))
+                .addGap(413, 413, 413)
+                .addComponent(jLabel2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(panelBack, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(grafoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(26, 26, 26))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void crearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearActionPerformed
+        if (verticeField.getText().isEmpty() == false) {
+            if (configuracion() != -1) {
+                cvt.setVertices(numeroValido());
+                cvt.generarGrafo();
+
+                seleccionado();
+                this.dibujarVertices();
+                this.dibujarAristas();
+                crear.setEnabled(false);
+
+                grafoPanel.addMouseListener(new PosiblesContagios(cvt.getPtr(), posiciones));
+            } else {
+                JOptionPane.showMessageDialog(null, "SELECCIONE MODALIDAD");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "DIGITE UNA CANTIDAD DE VERTICES");
+        }
+    }//GEN-LAST:event_crearActionPerformed
+
+    private void reiniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reiniciarActionPerformed
+        this.iteraciones.setText("");
+        this.reguladorIteracion = 0;
+        this.verticeField.setText("");
+        this.opcion2.setEnabled(true);
+        this.opcion1.setEnabled(true);
+        this.opcion3.setEnabled(true);
+        this.grafoPanel.repaint();
+        this.grupoBotones.clearSelection();
+        crear.setEnabled(true);
+        cvt.setPaciente0(false);
+        Vertice.setIdGen(0);
+    }//GEN-LAST:event_reiniciarActionPerformed
 
     private void IteracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IteracionActionPerformed
         cvt.infectar(cvt.getPtr().getInfectados());
@@ -601,41 +652,19 @@ public class Ventana extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_verticeFieldActionPerformed
 
-    private void reiniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reiniciarActionPerformed
-        this.iteraciones.setText("");
-        this.reguladorIteracion = 0;
-        this.verticeField.setText("");
-        this.opcion2.setEnabled(true);
-        this.opcion1.setEnabled(true);
-        this.opcion3.setEnabled(true);
-        this.grafoPanel.repaint();
-        this.grupoBotones.clearSelection();
-        crear.setEnabled(true);
-        cvt.setPaciente0(false);
-        Vertice.setIdGen(0);
+    private void panelBackMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelBackMouseEntered
+        this.panelBack.setBackground(new Color(255, 202, 58));
+    }//GEN-LAST:event_panelBackMouseEntered
 
-    }//GEN-LAST:event_reiniciarActionPerformed
+    private void formMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseEntered
+        this.panelBack.setBackground(new Color(106, 76, 147));
+    }//GEN-LAST:event_formMouseEntered
 
-    private void crearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearActionPerformed
-        if (verticeField.getText().isEmpty() == false) {
-            if (configuracion() != -1) {
-                cvt.setVertices(numeroValido());
-                cvt.generarGrafo();
-
-                seleccionado();
-                this.dibujarVertices();
-                this.dibujarAristas();
-                crear.setEnabled(false);
-
-                grafoPanel.addMouseListener(new PosiblesContagios(cvt.getPtr(), posiciones));
-            } else {
-                JOptionPane.showMessageDialog(null, "SELECCIONE MODALIDAD");
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "DIGITE UNA CANTIDAD DE VERTICES");
-        }
-
-    }//GEN-LAST:event_crearActionPerformed
+    private void panelBackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelBackMouseClicked
+        m = new MainMenu();
+        this.setVisible(false);
+        m.setVisible(true);
+    }//GEN-LAST:event_panelBackMouseClicked
 
     /**
      * @param args the command line arguments
@@ -681,14 +710,14 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JLabel iteraciones;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JRadioButton opcion1;
     private javax.swing.JRadioButton opcion2;
     private javax.swing.JRadioButton opcion3;
+    private javax.swing.JPanel panelBack;
     private javax.swing.JButton reiniciar;
-    private javax.swing.JLabel title;
-    private javax.swing.JPanel titlePanel;
     private javax.swing.JTextField verticeField;
     // End of variables declaration//GEN-END:variables
 }
