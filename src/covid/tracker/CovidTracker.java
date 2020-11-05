@@ -5,6 +5,7 @@
  */
 package covid.tracker;
 
+import Grafico.MainMenu;
 import Grafico.Ventana;
 import java.util.Random;
 import java.util.Scanner;
@@ -20,8 +21,10 @@ public class CovidTracker {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Ventana v = new Ventana();
-        v.setVisible(true);
+       // Ventana v = new Ventana();
+        //v.setVisible(true);
+          MainMenu m = new MainMenu();
+          m.setVisible(true);
     }
 
     
