@@ -5,12 +5,15 @@
  */
 package utils;
 
+import Grafico.Info;
 import Grafico.Punto;
 import covid.tracker.Arista;
 import covid.tracker.Vertice;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  *
@@ -20,6 +23,11 @@ public class PosiblesContagios implements MouseListener {
 
     Vertice vertices;
     Punto posiciones;
+    Info i;
+    JLabel labelEditar1 = new JLabel();
+    JLabel labelEditar2 = new JLabel();
+    JLabel labelEditar3 = new JLabel();
+    JLabel labelEditar4 = new JLabel();
 
     public PosiblesContagios(Vertice vertices, Punto posiciones) {
         this.vertices = vertices;
@@ -35,7 +43,7 @@ public class PosiblesContagios implements MouseListener {
     public void mousePressed(MouseEvent me) {
         int x = me.getX();
         int y = me.getY();
-
+        i = new Info();
         Punto p = posiciones;
 
         while (p != null) {
@@ -43,11 +51,14 @@ public class PosiblesContagios implements MouseListener {
                 if (y >= p.getY() && y < p.getY() + 60) {
                     Vertice v = (Vertice) vertices.getNodo(p.getId());
                     StringBuffer info = new StringBuffer();
-                    info.append("ID: " + v.getId() + "\n");
-                    info.append("¿Usa mascarrilla?: " + v.isMascarilla() + "\n");
-                    info.append("¿Está infectado?: " + v.isInfectado() + "\n");
-                    info.append("Tiene conexiones con los nodos: \n");
-
+                    //info.append("ID: " + v.getId() + "\n");
+                    //info.append("¿Usa mascarrilla?: " + v.isMascarilla() + "\n");
+                    //info.append("¿Está infectado?: " + v.isInfectado() + "\n");
+                    //info.append("Tiene conexiones con los nodos: \n");
+                    labelEditar1.setText(""+v.getId());
+                    labelEditar2.setText(""+v.isMascarilla());
+                    labelEditar3.setText(""+v.isInfectado());
+                    
                     Arista a = v.getAristas();
 
                     while (a != null) {
@@ -56,8 +67,14 @@ public class PosiblesContagios implements MouseListener {
                         a = a.getLink();
                     }
 
-                    info.append("\n");
-                    JOptionPane.showMessageDialog(null, info);
+                   // info.append("\n");
+                    labelEditar4.setText(""+info.toString());
+                    i.setEditarId(labelEditar1);
+                    i.setEditarMascarilla(labelEditar2);
+                    i.setEditarInfectado(labelEditar3);
+                    i.setEditarConexiones(labelEditar4);
+                    i.setVisible(true);
+                    //JOptionPane.showMessageDialog(null, info);
                 }
 
             }
@@ -69,6 +86,7 @@ public class PosiblesContagios implements MouseListener {
     public void mouseReleased(MouseEvent me) {
 
     }
+
 
     @Override
     public void mouseEntered(MouseEvent me) {

@@ -32,6 +32,8 @@ import utils.PosiblesContagios;
 public class Ventana extends javax.swing.JFrame {
 
     // CovidTracker cvt;
+    Emergencia1 e ;
+    Emergencia2 e2;
     int p;
     int posicionX;
     int posicionY;
@@ -605,10 +607,15 @@ public class Ventana extends javax.swing.JFrame {
 
                 grafoPanel.addMouseListener(new PosiblesContagios(cvt.getPtr(), posiciones));
             } else {
-                JOptionPane.showMessageDialog(null, "SELECCIONE MODALIDAD");
+                
+                //JOptionPane.showMessageDialog(null, "SELECCIONE MODALIDAD");
+                e2 = new Emergencia2();
+                e2.setVisible(true);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "DIGITE UNA CANTIDAD DE VERTICES");
+           // JOptionPane.showMessageDialog(null, "DIGITE UNA CANTIDAD DE VERTICES");
+           e= new Emergencia1();
+           e.setVisible(true);
         }
     }//GEN-LAST:event_crearActionPerformed
 

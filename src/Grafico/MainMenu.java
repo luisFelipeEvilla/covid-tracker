@@ -232,8 +232,10 @@ public class MainMenu extends javax.swing.JFrame {
 
     private void panelExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelExitMouseClicked
         
-        this.dispose();
+       // this.dispose();
+       System.exit(0);
         //v.dispose();
+        //setDefaultCloseOperation(this.EXIT_ON_CLOSE);
     }//GEN-LAST:event_panelExitMouseClicked
 
     private void panelExitMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelExitMouseEntered
@@ -267,7 +269,8 @@ public class MainMenu extends javax.swing.JFrame {
 
     private void panelBoton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelBoton1MouseClicked
         v = new Ventana();
-        this.setVisible(false);
+       // this.setVisible(false);
+        this.dispose();
         v.setVisible(true);
         
     }//GEN-LAST:event_panelBoton1MouseClicked
