@@ -5,6 +5,7 @@ import covid.tracker.Vertice;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Optional;
@@ -41,10 +42,10 @@ public class Grafo {
         configuracion = 0;
         iteracion = 0;
         PROBABILIDAD_MASCARILLA = 1 / 2;
-        PROBABILIDAD_ARISTA = 0.7f;
+        PROBABILIDAD_ARISTA = 0.90f;
 
     }
-    
+
     /**
      * Genera un grafo aleatoriamente
      */
@@ -126,6 +127,7 @@ public class Grafo {
 
     /**
      * Recorrido bfs del grafo
+     *
      * @param origen Nodo por el cual se empezara a recorrer el grafo.
      * @param raiz Ptr de la lista de adyacencia del grafo.
      * @return lista del recorrido bfs
@@ -160,6 +162,124 @@ public class Grafo {
         return path;
     }
 
+    /**
+     * Halla los caminos minimos desde un nodo origen, hacia todos los demás
+     * @param origen nodo de origen
+     * @param raiz lista de adyacencia
+     * @return Devuelve los caminos minimos desde el nodo de origen, hacia todos los demás
+     */
+    public Vertice dijstrak(Vertice origen, Vertice raiz) {
+
+        Vertice destinos = null;
+        double pesos[] = new double[raiz.cantidadDeVertices(raiz)];
+        int cont = 0;
+        Vertice v = raiz;
+
+        while (v != null) {
+            if (destinos == null) {
+                destinos = new Vertice(v);
+            } else {
+                destinos.addNode(new Vertice(v));
+            }
+            pesos[cont++] = 1;
+            v = (Vertice) v.getLink();
+        }
+
+        v = destinos;
+
+        while (v != null) {
+            v.setAristas(null);
+            v = (Vertice) v.getLink();
+        }
+
+        // Este vertice debe provenir de la raiz del grafo
+        Vertice indice = new Vertice(origen);
+        // Vertices cuyo camino minimo ya ha sido hayado
+        Vertice noIterar = new Vertice(origen);
+
+        for (int i = 0; i < raiz.cantidadDeVertices(raiz) - 1; i++) {
+            Arista aristas = indice.getAristas();
+
+            while (aristas != null) {
+                Vertice destino = (Vertice) destinos.getNodo(aristas.getId());
+
+                // si su camino minimo aún no ha sido encontrado
+                if (noIterar.getNodo(destino.getId()) == null) {
+                    double peso = calcularPeso(indice, destino, destinos, raiz);
+                    System.out.println("id: " + destino.getId());
+                    System.out.println("peso: " + peso);
+                    BigDecimal a = new BigDecimal(peso);
+                    BigDecimal b = new BigDecimal(pesos[destino.getId()]);
+
+                    if (a.compareTo(b) == -1) {
+                        pesos[destino.getId()] = peso;
+                        destino.setAristas(new Arista(indice.getId()));
+
+                    }
+                }
+
+                aristas = (Arista) aristas.getLink();
+            }
+
+            indice = (Vertice) raiz.getNodo(hallarMenor(pesos));
+            Vertice copiaIndice = new Vertice(indice);
+            copiaIndice.setLink(null);
+            noIterar.addNode(copiaIndice);
+        }
+
+        return null;
+    }
+
+    /**
+     * Calcula el peso de un camino generado por el algoritmo de disjtrak
+     * @param origen nodo de origen
+     * @param destino nodo de destino
+     * @param tabla tabla algoritmo de dijstrak
+     * @param raiz lista de adyacencia
+     * @return coste de recorrer el camino
+     */
+    public double calcularPeso(Vertice origen, Vertice destino, Vertice tabla, Vertice raiz) {
+        Arista arista = origen.getArista(destino.getId());
+
+        if (arista != null) {
+            double peso = getProbabilidadNoInfectarse(destino, origen, arista);
+
+            destino = origen;
+            Vertice aux = (Vertice) tabla.getNodo(origen.getId());
+            arista = aux.getAristas();
+
+            if (arista != null) {
+                origen = (Vertice) raiz.getNodo(arista.getId());
+                return peso * calcularPeso(origen, destino, tabla, raiz);
+            } else {
+                return 1;
+            }
+        } else {
+            return 1;
+        }
+    }
+
+    /**
+     * Encuentra el indice del elemento menor
+     *
+     * @param pesos lista de elementos de tipo double
+     * @return indice en la lista, del elemento menor
+     */
+    public int hallarMenor(double[] pesos) {
+        int index = 0;
+        BigDecimal menor = new BigDecimal(pesos[0]);
+
+        for (int i = 1; i < pesos.length; i++) {
+            BigDecimal aux = new BigDecimal(pesos[i]);
+            if (menor.compareTo(aux) == 1) {
+                menor = aux;
+                index = i;
+            }
+        }
+
+        return index;
+    }
+
     public void conectarTodo() {
         Vertice actual = vertices;
         Vertice anterior = actual;
@@ -181,7 +301,7 @@ public class Grafo {
             }
 
             // si se encuentra aislado, se conecta a algun nodo
-            if (aislado) {
+            /*    if (aislado) {
                 distancia = (int) (Math.random() * 5);
                 // se conecta con el nodo siguiente
                 if (actual.getLink() != null) {
@@ -192,11 +312,11 @@ public class Grafo {
                     anterior.addArista(actual.getId(), distancia);
                 }
             }
-
+             */
             actual = (Vertice) actual.getLink();
         }
     }
-    
+
     /**
      * Decide aleatoriamente, cuales nodos poseeran mascarillas, y cuales no
      */
@@ -216,7 +336,7 @@ public class Grafo {
         }
 
     }
-    
+
     /**
      * Le asigna a todos los nodos su atributo de mascarilla como verdadero
      */
@@ -231,6 +351,7 @@ public class Grafo {
 
     /**
      * Genera una iteración de infección de nodos
+     *
      * @param infectados Lista de vertices que ya estaban infectados antes de
      * esta iteracion (Los que pueden infectar a otros en esta iteracion)
      */
@@ -315,13 +436,15 @@ public class Grafo {
 
         iteracion++;
     }
-    
+
     /**
-     * Obtiene las probabilidades que tiene un nodo no infectado, de no infectarse.
-     * al interactuar con un nodo infectado
+     * Obtiene las probabilidades que tiene un nodo no infectado, de no
+     * infectarse. al interactuar con un nodo infectado
+     *
      * @param destino nodo a infectar
      * @param origen nodo infectado
-     * @param arista arista, con la información de la distancia entre ambos vertices
+     * @param arista arista, con la información de la distancia entre ambos
+     * vertices
      * @return probabilidad de que un nodo no quede infectado
      */
     public float getProbabilidadNoInfectarse(Vertice destino, Vertice origen, Arista arista) {
@@ -367,7 +490,8 @@ public class Grafo {
     }
 
     /**
-     * Lista los vertices a través de la consola, y muestra información detallada acerca de ellos
+     * Lista los vertices a través de la consola, y muestra información
+     * detallada acerca de ellos
      */
     public void listarVertices() {
         Vertice v = vertices;
@@ -382,9 +506,10 @@ public class Grafo {
             v = (Vertice) v.getLink();
         }
     }
-    
+
     /**
-     * @return Retorna falso, si todavia quedan nodos sin infectar, verdadero, si todos los nodos ya fueron infectados
+     * @return Retorna falso, si todavia quedan nodos sin infectar, verdadero,
+     * si todos los nodos ya fueron infectados
      */
     public boolean todosInfectados() {
         Vertice v = vertices;
@@ -397,7 +522,7 @@ public class Grafo {
         }
         return true;
     }
-    
+
     /**
      * Lista por consola, los nodos que han sido infectados
      */
@@ -413,17 +538,19 @@ public class Grafo {
         }
         System.out.println("");
     }
-    
+
     /**
      * Devuelve una lista de todos los nodos que hay en el grafo
+     *
      * @return Lista de adyacencia, con todos los nodos que hay en el grafo.
      */
     public Vertice getPtr() {
         return vertices;
     }
-    
+
     /**
      * Permite cambiar el número de vertices del grafo
+     *
      * @param numVertices número de vertices
      */
     public void setVertices(int numVertices) {
@@ -432,7 +559,9 @@ public class Grafo {
 
     /**
      * Establece si ya se creo un paciente0
-     * @param paciente0 falso, si no existe aún un paciente0, verdadero si ya fue creado
+     *
+     * @param paciente0 falso, si no existe aún un paciente0, verdadero si ya
+     * fue creado
      */
     public void setPaciente0(boolean paciente0) {
         this.paciente0 = paciente0;
