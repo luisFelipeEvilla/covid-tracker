@@ -18,6 +18,7 @@ public class Especificaciones extends javax.swing.JFrame {
      */
     public Especificaciones() {
         initComponents();
+        this.setResizable(false);
     }
 
     /**

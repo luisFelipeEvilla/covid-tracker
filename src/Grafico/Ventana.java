@@ -58,6 +58,7 @@ public class Ventana extends javax.swing.JFrame {
     PosiblesContagios posiblesContagios;
     boolean posicionesCalculadas;
     int iteracionauto = 0;
+    
     public Ventana() {
         
         initComponents();
@@ -90,7 +91,9 @@ public class Ventana extends javax.swing.JFrame {
         posicionesCalculadas = false;
     }
 
-    // aplica la configuracion de aplicacion de mascarilla
+    /**
+     * aplica la configuracion de aplicacion de mascarilla
+     */
     public void seleccionado() {
         if (this.opcion1.isSelected()) {
             return;
@@ -102,7 +105,11 @@ public class Ventana extends javax.swing.JFrame {
 
     }
 
-    // lee la modalidad de aplicacion de mascarilla seleccionada, y desactiva las otras
+    /**
+     * lee la modalidad de aplicacion de mascarilla seleccionada, y desactiva las otras
+     * @return 1, para no aplicar mascarrilla | 2, para aplicar mascarilla a todos los vertices |
+     * 3 para aplicar la mascarilla aleatoriamente.
+     */
     public int configuracion() {
         if (this.opcion2.isSelected()) {
             this.opcion1.setEnabled(false);
@@ -134,7 +141,11 @@ public class Ventana extends javax.swing.JFrame {
         return sb.toString();
     }
 
-    //lee el num de vertices
+    /**
+     * Obtiene el número de vertices del grafo, de un elemento
+     * JTextField, y verifica que sea un número válido.
+     * @return número de vertices del grafo.
+     */
     public int numeroValido() {
         int n = Integer.parseInt(this.verticeField.getText());
         while (n <= 0) {
@@ -144,7 +155,9 @@ public class Ventana extends javax.swing.JFrame {
         return n;
     }
 
-    // Dibuja los vertices
+    /**
+     * Dibuja los vertices del grafo.
+     */
     public void dibujarVertices() {
         Graphics g = this.grafoPanel.getGraphics();
         Vertice v = cvt.getPtr();
@@ -165,6 +178,7 @@ public class Ventana extends javax.swing.JFrame {
                     break;
 
             }
+            
             if (!posicionesCalculadas) {
                 if (posiciones == null) {
                     posiciones = new Punto(v.getId(), posicionX, posicionY);
@@ -202,7 +216,10 @@ public class Ventana extends javax.swing.JFrame {
         
         posicionesCalculadas = true;
     }
-
+    
+    /**
+     * Dibuja las aristas del grafo.
+     */
     public void dibujarAristas() {
         Graphics g = this.grafoPanel.getGraphics();
         Vertice v = cvt.getPtr();
@@ -665,10 +682,12 @@ public class Ventana extends javax.swing.JFrame {
                     grafoPanel.removeMouseListener(posiblesContagios);
                 }
 
-                posiblesContagios = new PosiblesContagios(cvt.getPtr(), posiciones);
+                
                 seleccionado();
                 this.dibujarVertices();
                 this.dibujarAristas();
+                
+                posiblesContagios = new PosiblesContagios(cvt.getPtr(), posiciones);
                 crear.setEnabled(false);
 
                 grafoPanel.addMouseListener(posiblesContagios);
@@ -699,6 +718,8 @@ public class Ventana extends javax.swing.JFrame {
         cvt.setPaciente0(false);
         Vertice.setIdGen(0);
         posicionesCalculadas = false;
+        posiciones = null;
+      //  quickIterations.setText("");
         //quickIterations.setText("");
         timer = new Timer();
         sb2.setLength(0);
@@ -754,8 +775,7 @@ public class Ventana extends javax.swing.JFrame {
        if(cvt.getPtr()!=null){
              TimerTask tarea = new TimerTask() {
             @Override
-            public void run() {
-                
+            public void run() {               
                 cvt.infectar(cvt.getPtr().getInfectados());
                 dibujarVertices();
                 sb2.append(reporte(cvt.getPtr()));

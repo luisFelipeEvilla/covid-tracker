@@ -6,7 +6,7 @@
 package covid.tracker;
 
 /**
- *
+ * Nodo de una lista enlazada simple
  * @author luisf
  */
 public abstract class Nodo {
@@ -19,6 +19,10 @@ public abstract class Nodo {
         this.id = id;
     }
 
+    /**
+     * Crea un nuevo nodo, apartir de uno ya existente
+     * @param node Nodo original
+     */
     public void addNode(Nodo node) {
         Nodo p = this;
         
@@ -31,6 +35,11 @@ public abstract class Nodo {
         }
     }
     
+    /**
+     * Devuelve la cantidad de vertices que posee una lista.
+     * @param ptr raiz de la lista
+     * @return  número de nodos de la lista
+     */
     public int cantidadDeVertices(Nodo ptr){
         int cont=0;
         Nodo temp = ptr;
@@ -40,7 +49,13 @@ public abstract class Nodo {
         }
         return cont;
     }
-
+    
+    /**
+     * Remueve un nodo de la lista
+     * @param ptr raiz de la lista de adyacencia
+     * @param id id del nodo a eliminar
+     * @return retorna la nueva lista modificada
+     */
     public Nodo removeNode(Nodo ptr, int id) {
         Nodo p = ptr;
         Nodo q = null;
@@ -60,6 +75,11 @@ public abstract class Nodo {
 
         return ptr;
     }
+    
+    /**
+     * Recorre todos los nodos de la lista
+     * @param ptr raiz de la lista
+     */
     public void recorrerVertices(Nodo ptr){
         Nodo temp = ptr;
         while(temp!=null){
@@ -67,6 +87,11 @@ public abstract class Nodo {
         }
     }
     
+    /**
+     * Busca un nodo especifico dentro de la lista
+     * @param id id del nodo a buscar
+     * @return instancia del nodo seleccionado o nulo, en caso de no encontrarlo
+     */
     public Nodo getNodo(int id) {
         Nodo p = this;
         
@@ -91,19 +116,6 @@ public abstract class Nodo {
 
     public void setId(int id) {
         this.id = id;
-    }
-    
-    public int getSize() {
-        int contador = 0;
-        
-        Nodo v = this;
-        
-        while (v != null) {
-            v = v.getLink();
-            contador++;
-        }
-        
-        return contador;
     }
 
 }

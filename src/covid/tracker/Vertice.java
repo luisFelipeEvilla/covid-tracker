@@ -6,7 +6,7 @@
 package covid.tracker;
 
 /**
- *
+ * Vertice un grafo dirigido
  * @author luisf
  */
 public class Vertice extends Nodo{
@@ -23,6 +23,10 @@ public class Vertice extends Nodo{
         aristas = null;
     }
 
+    /**
+     * Crea un nuevo vertice, apartir de la información del original
+     * @param original Vertice original, a ser copiado
+     */
     public Vertice(Vertice original) {
         super(original.getId());
         this.infectado = original.isInfectado();
@@ -30,6 +34,11 @@ public class Vertice extends Nodo{
         this.aristas = original.getAristas();
     }
 
+    /**
+     * Añade una nueva arista saliente del vertice
+     * @param id id del nodo destino
+     * @param distancia distancia entre ambos nodos
+     */
     public void addArista(int id, int distancia) {
         if (aristas == null) {
             aristas = new Arista(id, distancia);
@@ -38,6 +47,10 @@ public class Vertice extends Nodo{
         }
     }
     
+    /**
+     * Devuelve una lista de los nodos que han sido infectados
+     * @return Lista de nodos que han sido infectados
+     */
     public Vertice getInfectados() {
         Vertice v = this;
         Vertice infectados = null;
@@ -56,6 +69,9 @@ public class Vertice extends Nodo{
         return infectados;
     }
     
+    /**
+     * Muestra por consola, la lista de todas las aristas del vertice
+     */
     public void listAristas() {
         Arista p = aristas;
         StringBuffer info = new StringBuffer();
@@ -106,6 +122,10 @@ public class Vertice extends Nodo{
         this.infectado = infectado;
     }
     
+    /**
+     * Cuenta el número de aristas que posee el vertice
+     * @return número de aristas que posee el vertice
+     */
     public int contarAristas() {
         int contador = 0;
         

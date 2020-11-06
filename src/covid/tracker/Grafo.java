@@ -44,7 +44,10 @@ public class Grafo {
         PROBABILIDAD_ARISTA = 0.7f;
 
     }
-
+    
+    /**
+     * Genera un grafo aleatoriamente
+     */
     public void generarGrafo() {
         paciente0 = false;
         Vertice.setIdGen(0);
@@ -120,8 +123,14 @@ public class Grafo {
         }
         // conectarTodo();
     }
-    
-        public Vertice BFS(Vertice origen, Vertice raiz) {
+
+    /**
+     * Recorrido bfs del grafo
+     * @param origen Nodo por el cual se empezara a recorrer el grafo.
+     * @param raiz Ptr de la lista de adyacencia del grafo.
+     * @return 
+     */
+    public Vertice BFS(Vertice origen, Vertice raiz) {
         Vertice v;
         boolean visitados[] = new boolean[raiz.cantidadDeVertices(raiz)];
         Vertice path = new Vertice(origen);
@@ -151,6 +160,7 @@ public class Grafo {
         return path;
     }
 
+    /**
     public Vertice dfs(Vertice inicio) {
         Stack<Vertice> s = new Stack();
 
@@ -169,17 +179,17 @@ public class Grafo {
                     visitados.addNode(w);
                     s.add(w);
                 }
-                
+
                 a = a.getLink();
                 System.out.println("iteracion");
             }
             System.out.println("bucle principal");
         }
-        
+
         System.out.println("finalizado");
         return visitados;
     }
-
+    * */
     public void conectarTodo() {
         Vertice actual = vertices;
         Vertice anterior = actual;
@@ -216,7 +226,10 @@ public class Grafo {
             actual = (Vertice) actual.getLink();
         }
     }
-
+    
+    /**
+     * Decide aleatoriamente, cuales nodos poseeran mascarillas, y cuales no
+     */
     public void aplicarMascarillaAleatorio() {
         Vertice v1 = vertices;
         Random rand = new Random();
@@ -233,7 +246,10 @@ public class Grafo {
         }
 
     }
-
+    
+    /**
+     * Le asigna a todos los nodos su atributo de mascarilla como verdadero
+     */
     public void aplicarMascarilla() {
         Vertice v1 = vertices;
 
@@ -244,7 +260,7 @@ public class Grafo {
     }
 
     /**
-     *
+     * Genera una iteración de infección de nodos
      * @param infectados Lista de vertices que ya estaban infectados antes de
      * esta iteracion (Los que pueden infectar a otros en esta iteracion)
      */
@@ -333,7 +349,60 @@ public class Grafo {
 
         iteracion++;
     }
+    
+    /**
+     * Obtiene las probabilidades que tiene un nodo no infectado, de no infectarse.
+     * al interactuar con un nodo infectado
+     * @param destino nodo a infectar
+     * @param origen nodo infectado
+     * @param arista arista, con la información de la distancia entre ambos vertices
+     * @return 
+     */
+    public float getProbabilidadNoInfectarse(Vertice destino, Vertice origen, Arista arista) {
 
+        if (!destino.isInfectado()) {
+            if (!origen.isMascarilla()) {
+
+                if (!destino.isMascarilla()) {
+
+                    if (arista.getDistancia() > 2) {
+                        return 0.2f;
+                    } else {
+                        return 0.1f;
+                    }
+                } else {
+                    if (arista.getDistancia() > 2) {
+                        return 06.f;
+                    } else {
+                        return 0.4f;
+                    }
+                }
+            } else {
+                if (!destino.isMascarilla()) {
+
+                    if (arista.getDistancia() > 2) {
+                        return 0.7f;
+                    } else {
+                        return 0.6f;
+                    }
+                } else {
+
+                    if (arista.getDistancia() > 2) {
+                        return 0.8f;
+                    } else {
+                        return 0.7f;
+                    }
+
+                }
+            }
+
+        }
+        return 1;
+    }
+
+    /**
+     * Lista los vertices a través de la consola, y muestra información detallada acerca de ellos
+     */
     public void listarVertices() {
         Vertice v = vertices;
 
@@ -347,7 +416,10 @@ public class Grafo {
             v = (Vertice) v.getLink();
         }
     }
-
+    
+    /**
+     * @return Retorna falso, si todavia quedan nodos sin infectar, verdadero, si todos los nodos ya fueron infectados
+     */
     public boolean todosInfectados() {
         Vertice v = vertices;
         while (v != null) {
@@ -359,7 +431,10 @@ public class Grafo {
         }
         return true;
     }
-
+    
+    /**
+     * Lista por consola, los nodos que han sido infectados
+     */
     public void mostrarInfectados() {
         Vertice v = vertices;
 
@@ -372,15 +447,27 @@ public class Grafo {
         }
         System.out.println("");
     }
-
+    
+    /**
+     * Devuelve una lista de todos los nodos que hay en el grafo
+     * @return Lista de adyacencia, con todos los nodos que hay en el grafo.
+     */
     public Vertice getPtr() {
         return vertices;
     }
-
+    
+    /**
+     * Permite cambiar el número de vertices del grafo
+     * @param numVertices número de vertices
+     */
     public void setVertices(int numVertices) {
         this.numVertices = numVertices;
     }
 
+    /**
+     * Establece si ya se creo un paciente0
+     * @param paciente0 falso, si no existe aún un paciente0, verdadero si ya fue creado
+     */
     public void setPaciente0(boolean paciente0) {
         this.paciente0 = paciente0;
     }
