@@ -671,12 +671,14 @@ public class Ventana extends javax.swing.JFrame {
             if (configuracion() != -1) {
                 cvt.setVertices(numeroValido());
                 cvt.generarGrafo();
+                
                 Vertice recorrido = cvt.BFS(cvt.getPtr().getInfectados(), cvt.getPtr());
                 
                 while (cvt.getPtr().cantidadDeVertices(cvt.getPtr()) > recorrido.cantidadDeVertices(recorrido)) {
                     cvt.generarGrafo();
                     recorrido = cvt.BFS(cvt.getPtr().getInfectados(), cvt.getPtr());
                 }
+                sb2.append(reporte(cvt.getPtr()));
                 
                 if (posiblesContagios != null) {
                     grafoPanel.removeMouseListener(posiblesContagios);
@@ -729,8 +731,9 @@ public class Ventana extends javax.swing.JFrame {
         
         cvt.infectar(cvt.getPtr().getInfectados());
         dibujarVertices();
-        sb2.append(reporte(cvt.getPtr()));
+        
         String label = "Iteracion: " + ++reguladorIteracion;
+        sb2.append(reporte(cvt.getPtr()));
         this.iteraciones.setText(label);
         if (cvt.todosInfectados() && verticeField.getText().isEmpty() == false) {
             //JOptionPane.showMessageDialog(null, "YA TODOS LOS USUARIOS TIENEN COVID-19");
@@ -778,8 +781,9 @@ public class Ventana extends javax.swing.JFrame {
             public void run() {               
                 cvt.infectar(cvt.getPtr().getInfectados());
                 dibujarVertices();
-                sb2.append(reporte(cvt.getPtr()));
+                
                 String label = "Iteracion: " + ++reguladorIteracion;
+                sb2.append(reporte(cvt.getPtr()));
                     iteraciones.setText(label);
                     if (cvt.todosInfectados() && verticeField.getText().isEmpty() == false) {
                     //JOptionPane.showMessageDialog(null, "YA TODOS LOS USUARIOS TIENEN COVID-19");
