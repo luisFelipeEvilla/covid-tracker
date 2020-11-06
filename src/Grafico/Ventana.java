@@ -149,6 +149,7 @@ public class Ventana extends javax.swing.JFrame {
                     break;
 
             }
+            
             if (!posicionesCalculadas) {
                 if (posiciones == null) {
                     posiciones = new Punto(v.getId(), posicionX, posicionY);
@@ -644,10 +645,12 @@ public class Ventana extends javax.swing.JFrame {
                     grafoPanel.removeMouseListener(posiblesContagios);
                 }
 
-                posiblesContagios = new PosiblesContagios(cvt.getPtr(), posiciones);
+                
                 seleccionado();
                 this.dibujarVertices();
                 this.dibujarAristas();
+                
+                posiblesContagios = new PosiblesContagios(cvt.getPtr(), posiciones);
                 crear.setEnabled(false);
 
                 grafoPanel.addMouseListener(posiblesContagios);
@@ -678,6 +681,7 @@ public class Ventana extends javax.swing.JFrame {
         cvt.setPaciente0(false);
         Vertice.setIdGen(0);
         posicionesCalculadas = false;
+        posiciones = null;
         quickIterations.setText("");
         timer = new Timer();
     }//GEN-LAST:event_reiniciarActionPerformed
@@ -730,8 +734,7 @@ public class Ventana extends javax.swing.JFrame {
        if(cvt.getPtr()!=null){
              TimerTask tarea = new TimerTask() {
             @Override
-            public void run() {
-                
+            public void run() {               
                 cvt.infectar(cvt.getPtr().getInfectados());
                 dibujarVertices();
                 String label = "Iteracion: " + ++reguladorIteracion;

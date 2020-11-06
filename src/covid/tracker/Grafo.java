@@ -120,8 +120,8 @@ public class Grafo {
         }
         // conectarTodo();
     }
-    
-        public Vertice BFS(Vertice origen, Vertice raiz) {
+
+    public Vertice BFS(Vertice origen, Vertice raiz) {
         Vertice v;
         boolean visitados[] = new boolean[raiz.cantidadDeVertices(raiz)];
         Vertice path = new Vertice(origen);
@@ -169,13 +169,13 @@ public class Grafo {
                     visitados.addNode(w);
                     s.add(w);
                 }
-                
+
                 a = a.getLink();
                 System.out.println("iteracion");
             }
             System.out.println("bucle principal");
         }
-        
+
         System.out.println("finalizado");
         return visitados;
     }
@@ -332,6 +332,48 @@ public class Grafo {
         }
 
         iteracion++;
+    }
+
+    public float getProbabilidadNoInfectarse(Vertice destino, Vertice origen, Arista arista) {
+
+        if (!destino.isInfectado()) {
+            if (!origen.isMascarilla()) {
+
+                if (!destino.isMascarilla()) {
+
+                    if (arista.getDistancia() > 2) {
+                        return 0.2f;
+                    } else {
+                        return 0.1f;
+                    }
+                } else {
+                    if (arista.getDistancia() > 2) {
+                        return 06.f;
+                    } else {
+                        return 0.4f;
+                    }
+                }
+            } else {
+                if (!destino.isMascarilla()) {
+
+                    if (arista.getDistancia() > 2) {
+                        return 0.7f;
+                    } else {
+                        return 0.6f;
+                    }
+                } else {
+
+                    if (arista.getDistancia() > 2) {
+                        return 0.8f;
+                    } else {
+                        return 0.7f;
+                    }
+
+                }
+            }
+
+        }
+        return 1;
     }
 
     public void listarVertices() {
