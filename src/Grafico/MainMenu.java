@@ -8,7 +8,7 @@ package Grafico;
 import java.awt.Color;
 
 /**
- *
+ * Menu inicial de la aplicación.
  * @author JPPM
  */
 public class MainMenu extends javax.swing.JFrame {

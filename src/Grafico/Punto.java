@@ -8,7 +8,7 @@ package Grafico;
 import covid.tracker.Nodo;
 
 /**
- *
+ * Punto en el espacio bidimensional.
  * @author JPPM
  */
 public class Punto extends Nodo{
