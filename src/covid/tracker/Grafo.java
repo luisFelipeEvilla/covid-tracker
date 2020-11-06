@@ -128,7 +128,7 @@ public class Grafo {
      * Recorrido bfs del grafo
      * @param origen Nodo por el cual se empezara a recorrer el grafo.
      * @param raiz Ptr de la lista de adyacencia del grafo.
-     * @return 
+     * @return lista del recorrido bfs
      */
     public Vertice BFS(Vertice origen, Vertice raiz) {
         Vertice v;
@@ -160,36 +160,6 @@ public class Grafo {
         return path;
     }
 
-    /**
-    public Vertice dfs(Vertice inicio) {
-        Stack<Vertice> s = new Stack();
-
-        s.add(inicio);
-        Vertice visitados = new Vertice(inicio);
-        visitados.setLink(null);
-
-        while (!s.isEmpty()) {
-            Vertice v = s.pop();
-
-            Arista a = v.getAristas();
-
-            while (a != null) {
-                if (visitados.getNodo(a.getId()) == null) {
-                    Vertice w = (Vertice) vertices.getNodo(a.getId());
-                    visitados.addNode(w);
-                    s.add(w);
-                }
-
-                a = a.getLink();
-                System.out.println("iteracion");
-            }
-            System.out.println("bucle principal");
-        }
-
-        System.out.println("finalizado");
-        return visitados;
-    }
-    * */
     public void conectarTodo() {
         Vertice actual = vertices;
         Vertice anterior = actual;
@@ -263,10 +233,6 @@ public class Grafo {
      * Genera una iteración de infección de nodos
      * @param infectados Lista de vertices que ya estaban infectados antes de
      * esta iteracion (Los que pueden infectar a otros en esta iteracion)
-     */
-    /**
-     * Crea los nodos del grafo con sus aristas aleatorias, y el paciente0 de
-     * manera aleatoria
      */
     public void infectar(Vertice infectados) {
         // Nodo que infecta     
@@ -356,7 +322,7 @@ public class Grafo {
      * @param destino nodo a infectar
      * @param origen nodo infectado
      * @param arista arista, con la información de la distancia entre ambos vertices
-     * @return 
+     * @return probabilidad de que un nodo no quede infectado
      */
     public float getProbabilidadNoInfectarse(Vertice destino, Vertice origen, Arista arista) {
 

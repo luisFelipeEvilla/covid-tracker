@@ -174,17 +174,17 @@ public class Especificaciones extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void principalPanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_principalPanelMouseEntered
-       
-        if(this.backPanel!=null){
-            this.backPanel.setBackground(new Color(	135, 105, 177));
+
+        if (this.backPanel != null) {
+            this.backPanel.setBackground(new Color(135, 105, 177));
         }
     }//GEN-LAST:event_principalPanelMouseEntered
 
     private void panelBackMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelBackMouseEntered
-       if(this.backPanel!=null){
-         this.backPanel.setBackground(new Color(	255, 202, 58));
-       }
-       
+        if (this.backPanel != null) {
+            this.backPanel.setBackground(new Color(255, 202, 58));
+        }
+
     }//GEN-LAST:event_panelBackMouseEntered
 
     private void panelBackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelBackMouseClicked
