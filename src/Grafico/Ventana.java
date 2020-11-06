@@ -607,6 +607,13 @@ public class Ventana extends javax.swing.JFrame {
             if (configuracion() != -1) {
                 cvt.setVertices(numeroValido());
                 cvt.generarGrafo();
+                Vertice bfs = cvt.BFS(cvt.getPtr(), cvt.getPtr().getInfectados());
+                
+                while (cvt.getPtr().cantidadDeVertices(cvt.getPtr()) > bfs.cantidadDeVertices(bfs) ) {
+                    cvt.generarGrafo();
+                    bfs = cvt.BFS(cvt.getPtr(), cvt.getPtr().getInfectados());
+                }
+                
                 if (posiblesContagios != null) {
                     grafoPanel.removeMouseListener(posiblesContagios);
                 }
@@ -617,7 +624,7 @@ public class Ventana extends javax.swing.JFrame {
                 this.dibujarAristas();
                 crear.setEnabled(false);
 
-                grafoPanel.addMouseListener(new PosiblesContagios(cvt.getPtr(), posiciones));
+                grafoPanel.addMouseListener(posiblesContagios);
             } else {
 
                 //JOptionPane.showMessageDialog(null, "SELECCIONE MODALIDAD");
