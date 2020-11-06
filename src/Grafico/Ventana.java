@@ -33,7 +33,7 @@ public class Ventana extends javax.swing.JFrame {
 
     // CovidTracker cvt;
     Emergencia3 e3;
-    Emergencia1 e ;
+    Emergencia1 e;
     Emergencia2 e2;
     int p;
     int posicionX;
@@ -47,7 +47,10 @@ public class Ventana extends javax.swing.JFrame {
     private Punto posiciones;
     Color xx = new Color(255, 89, 94);
     Color xx2 = new Color(138, 201, 38);
-    MainMenu m ;
+    MainMenu m;
+    PosiblesContagios posiblesContagios;
+    boolean posicionesCalculadas;
+
     public Ventana() {
         initComponents();
         posiciones = null;
@@ -62,20 +65,21 @@ public class Ventana extends javax.swing.JFrame {
         cvt = new Grafo();
 
         this.getContentPane().setBackground(new Color(106, 76, 147));
-        
+
         // configuracion del jpanel 
-       // this.titlePanel.setBackground(Color.red);
+        // this.titlePanel.setBackground(Color.red);
         this.grafoPanel.setBackground(new Color(255, 255, 255));
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setResizable(false);
-        
+
         //cofiguracion de botones
         grupoBotones.add(opcion2);
         grupoBotones.add(opcion1);
         grupoBotones.add(opcion3);
 
         this.setLocationRelativeTo(null);
-
+        posiblesContagios = null;
+        posicionesCalculadas = false;
     }
 
     // aplica la configuracion de aplicacion de mascarilla
@@ -139,12 +143,13 @@ public class Ventana extends javax.swing.JFrame {
                     break;
 
             }
-
-            if (posiciones == null) {
-                posiciones = new Punto(v.getId(), posicionX, posicionY);
-            } else {
-                Punto p = new Punto(v.getId(), posicionX, posicionY);
-                posiciones.addNode(p);
+            if (!posicionesCalculadas) {
+                if (posiciones == null) {
+                    posiciones = new Punto(v.getId(), posicionX, posicionY);
+                } else {
+                    Punto p = new Punto(v.getId(), posicionX, posicionY);
+                    posiciones.addNode(p);
+                }
             }
 
             if (v.isInfectado()) {
@@ -172,6 +177,8 @@ public class Ventana extends javax.swing.JFrame {
 
             v = (Vertice) v.getLink();
         }
+        
+        posicionesCalculadas = true;
     }
 
     public void dibujarAristas() {
@@ -600,7 +607,11 @@ public class Ventana extends javax.swing.JFrame {
             if (configuracion() != -1) {
                 cvt.setVertices(numeroValido());
                 cvt.generarGrafo();
+                if (posiblesContagios != null) {
+                    grafoPanel.removeMouseListener(posiblesContagios);
+                }
 
+                posiblesContagios = new PosiblesContagios(cvt.getPtr(), posiciones);
                 seleccionado();
                 this.dibujarVertices();
                 this.dibujarAristas();
@@ -608,15 +619,15 @@ public class Ventana extends javax.swing.JFrame {
 
                 grafoPanel.addMouseListener(new PosiblesContagios(cvt.getPtr(), posiciones));
             } else {
-                
+
                 //JOptionPane.showMessageDialog(null, "SELECCIONE MODALIDAD");
                 e2 = new Emergencia2();
                 e2.setVisible(true);
             }
         } else {
-           // JOptionPane.showMessageDialog(null, "DIGITE UNA CANTIDAD DE VERTICES");
-           e= new Emergencia1();
-           e.setVisible(true);
+            // JOptionPane.showMessageDialog(null, "DIGITE UNA CANTIDAD DE VERTICES");
+            e = new Emergencia1();
+            e.setVisible(true);
         }
     }//GEN-LAST:event_crearActionPerformed
 
@@ -632,6 +643,7 @@ public class Ventana extends javax.swing.JFrame {
         crear.setEnabled(true);
         cvt.setPaciente0(false);
         Vertice.setIdGen(0);
+        posicionesCalculadas = false;
     }//GEN-LAST:event_reiniciarActionPerformed
 
     private void IteracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IteracionActionPerformed
@@ -643,7 +655,7 @@ public class Ventana extends javax.swing.JFrame {
             //JOptionPane.showMessageDialog(null, "YA TODOS LOS USUARIOS TIENEN COVID-19");
             e3 = new Emergencia3();
             e3.setVisible(true);
-            
+
         }
     }//GEN-LAST:event_IteracionActionPerformed
 

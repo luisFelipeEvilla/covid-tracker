@@ -43,12 +43,13 @@ public class PosiblesContagios implements MouseListener {
     public void mousePressed(MouseEvent me) {
         int x = me.getX();
         int y = me.getY();
-        i = new Info();
+        
         Punto p = posiciones;
 
         while (p != null) {
             if (x < (p.getX() + 60) && (x > p.getX())) {
                 if (y >= p.getY() && y < p.getY() + 60) {
+                    System.out.println(p.getId());
                     Vertice v = (Vertice) vertices.getNodo(p.getId());
                     StringBuffer info = new StringBuffer();
                     //info.append("ID: " + v.getId() + "\n");
@@ -69,11 +70,7 @@ public class PosiblesContagios implements MouseListener {
 
                    // info.append("\n");
                     labelEditar4.setText(""+info.toString());
-                    i.setEditarId(labelEditar1);
-                    i.setEditarMascarilla(labelEditar2);
-                    i.setEditarInfectado(labelEditar3);
-                    i.setEditarConexiones(labelEditar4);
-                    i.setVisible(true);
+                    i = new Info("" + v.getId(), ""+ v.isMascarilla(), "" + v.isInfectado(), info.toString());
                     //JOptionPane.showMessageDialog(null, info);
                 }
 

@@ -22,12 +22,26 @@ public class Info extends javax.swing.JFrame {
         //this.setSize(400,400);
         this.setLocationRelativeTo(null);
     }
+    
+    public Info(String id, String mascarilla, String infectado, String conexiones) {
+        initComponents();
+        //this.setSize(400,400);
+        this.setVisible(true);
+        this.setLocationRelativeTo(null);
+        this.editarId.setText(id);
+        this.editarMascarilla.setText(mascarilla);
+        this.editarInfectado.setText(infectado);
+        this.editarConexiones.setText(conexiones);
+      
+    }
+
 
     public JLabel getEditarConexiones() {
         return editarConexiones;
     }
 
     public void setEditarConexiones(JLabel editarConexiones) {
+        this.editarConexiones.setText(editarConexiones.getText());
         this.editarConexiones = editarConexiones;
     }
 
@@ -36,7 +50,7 @@ public class Info extends javax.swing.JFrame {
     }
 
     public void setEditarId(JLabel editarId) {
-        this.editarId = editarId;
+        this.editarId.setText(editarId.getText());
     }
 
     public JLabel getEditarInfectado() {
