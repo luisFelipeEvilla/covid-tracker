@@ -17,6 +17,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -35,6 +36,7 @@ import utils.PosiblesContagios;
 public class Ventana extends javax.swing.JFrame {
     
 // CovidTracker cvt;
+    StringBuffer sb2;
     Timer timer;
     Emergencia3 e3;
     Emergencia1 e;
@@ -69,7 +71,7 @@ public class Ventana extends javax.swing.JFrame {
         posicionY = this.grafoPanel.getHeight() / 6;
 
         cvt = new Grafo();
-
+        sb2 = new StringBuffer();
         this.getContentPane().setBackground(new Color(106, 76, 147));
 
         // configuracion del jpanel 
@@ -116,6 +118,20 @@ public class Ventana extends javax.swing.JFrame {
             return 3;
         }
         return -1;
+    }
+    public String reporte(Vertice v){
+        StringBuffer sb = new StringBuffer();
+        Vertice v2 = v;
+        sb.append("los vertices infectados en la iteracion "+reguladorIteracion+" son: ");
+        sb.append("\n");
+        while(v2!=null){
+            if(v2.isInfectado()){
+                sb.append(v2.getId()+" , ");
+            }
+            v2 = (Vertice) v2.getLink();
+        }
+        sb.append("\n");
+        return sb.toString();
     }
 
     //lee el num de vertices
@@ -402,7 +418,7 @@ public class Ventana extends javax.swing.JFrame {
         crear = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        quickIterations = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
         panelBack = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
 
@@ -506,8 +522,13 @@ public class Ventana extends javax.swing.JFrame {
             }
         });
 
-        quickIterations.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        quickIterations.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setBackground(new java.awt.Color(153, 123, 102));
+        jButton2.setText("Reporte");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -534,13 +555,13 @@ public class Ventana extends javax.swing.JFrame {
                         .addGap(36, 36, 36)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton1)
-                            .addComponent(quickIterations))))
-                .addContainerGap(43, Short.MAX_VALUE))
+                            .addComponent(jButton2))))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(58, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(verticeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
@@ -557,7 +578,7 @@ public class Ventana extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Iteracion)
-                    .addComponent(quickIterations))
+                    .addComponent(jButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(reiniciar)
                 .addGap(18, 18, 18)
@@ -678,13 +699,16 @@ public class Ventana extends javax.swing.JFrame {
         cvt.setPaciente0(false);
         Vertice.setIdGen(0);
         posicionesCalculadas = false;
-        quickIterations.setText("");
+        //quickIterations.setText("");
         timer = new Timer();
+        sb2.setLength(0);
     }//GEN-LAST:event_reiniciarActionPerformed
 
     private void IteracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IteracionActionPerformed
+        
         cvt.infectar(cvt.getPtr().getInfectados());
         dibujarVertices();
+        sb2.append(reporte(cvt.getPtr()));
         String label = "Iteracion: " + ++reguladorIteracion;
         this.iteraciones.setText(label);
         if (cvt.todosInfectados() && verticeField.getText().isEmpty() == false) {
@@ -734,6 +758,7 @@ public class Ventana extends javax.swing.JFrame {
                 
                 cvt.infectar(cvt.getPtr().getInfectados());
                 dibujarVertices();
+                sb2.append(reporte(cvt.getPtr()));
                 String label = "Iteracion: " + ++reguladorIteracion;
                     iteraciones.setText(label);
                     if (cvt.todosInfectados() && verticeField.getText().isEmpty() == false) {
@@ -757,6 +782,21 @@ public class Ventana extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        PrintWriter p = null;
+        try {
+            File f = new File("reporte.txt");
+            p = new PrintWriter(f);
+            p.append(sb2.toString());
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            p.close();
+        }
+            //System.out.println(sb2.toString());
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -801,6 +841,7 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.ButtonGroup grupoBotones;
     private javax.swing.JLabel iteraciones;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -810,7 +851,6 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JRadioButton opcion2;
     private javax.swing.JRadioButton opcion3;
     private javax.swing.JPanel panelBack;
-    private javax.swing.JLabel quickIterations;
     private javax.swing.JButton reiniciar;
     private javax.swing.JTextField verticeField;
     // End of variables declaration//GEN-END:variables
