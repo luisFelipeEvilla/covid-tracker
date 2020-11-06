@@ -633,6 +633,13 @@ public class Ventana extends javax.swing.JFrame {
             if (configuracion() != -1) {
                 cvt.setVertices(numeroValido());
                 cvt.generarGrafo();
+                Vertice recorrido = cvt.BFS(cvt.getPtr().getInfectados(), cvt.getPtr());
+                
+                while (cvt.getPtr().cantidadDeVertices(cvt.getPtr()) > recorrido.cantidadDeVertices(recorrido)) {
+                    cvt.generarGrafo();
+                    recorrido = cvt.BFS(cvt.getPtr().getInfectados(), cvt.getPtr());
+                }
+                
                 if (posiblesContagios != null) {
                     grafoPanel.removeMouseListener(posiblesContagios);
                 }
@@ -643,7 +650,7 @@ public class Ventana extends javax.swing.JFrame {
                 this.dibujarAristas();
                 crear.setEnabled(false);
 
-                grafoPanel.addMouseListener(new PosiblesContagios(cvt.getPtr(), posiciones));
+                grafoPanel.addMouseListener(posiblesContagios);
             } else {
 
                 //JOptionPane.showMessageDialog(null, "SELECCIONE MODALIDAD");
@@ -658,6 +665,7 @@ public class Ventana extends javax.swing.JFrame {
     }//GEN-LAST:event_crearActionPerformed
 
     private void reiniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reiniciarActionPerformed
+        this.reguladorIteracion = 0;
         this.iteraciones.setText("");
         this.reguladorIteracion = 0;
         this.verticeField.setText("");
@@ -726,8 +734,8 @@ public class Ventana extends javax.swing.JFrame {
                 
                 cvt.infectar(cvt.getPtr().getInfectados());
                 dibujarVertices();
-                String label = "Iteracion: " + ++iteracionauto;
-                    quickIterations.setText(label);
+                String label = "Iteracion: " + ++reguladorIteracion;
+                    iteraciones.setText(label);
                     if (cvt.todosInfectados() && verticeField.getText().isEmpty() == false) {
                     //JOptionPane.showMessageDialog(null, "YA TODOS LOS USUARIOS TIENEN COVID-19");
                     e3 = new Emergencia3();

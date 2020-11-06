@@ -6,7 +6,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Optional;
+import java.util.Queue;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Stack;
@@ -44,6 +46,8 @@ public class Grafo {
     }
 
     public void generarGrafo() {
+        paciente0 = false;
+        Vertice.setIdGen(0);
         Random rand = new Random();
         PROBABILIDAD_PACIENTE_CERO = 0.8f;
         int distancia = 0;
@@ -114,7 +118,37 @@ public class Grafo {
             vertices.setInfectado(true);
             paciente0 = true;
         }
-        conectarTodo();
+        // conectarTodo();
+    }
+    
+        public Vertice BFS(Vertice origen, Vertice raiz) {
+        Vertice v;
+        boolean visitados[] = new boolean[raiz.cantidadDeVertices(raiz)];
+        Vertice path = new Vertice(origen);
+
+        Queue<Vertice> cola = new LinkedList();
+        visitados[origen.getId()] = true;
+        cola.add(origen);
+
+        while (!cola.isEmpty()) {
+            v = cola.remove();
+            path.addNode(new Vertice(v));
+            v = (Vertice) raiz.getNodo(v.getId());
+
+            for (int i = 0; i < raiz.cantidadDeVertices(raiz); i++) {
+                if (v != null) {
+                    if (v.getArista(i) != null) {
+                        if (!visitados[i]) {
+                            visitados[i] = true;
+                            cola.add((Vertice) raiz.getNodo(i));
+                        }
+                    }
+                }
+            }
+        }
+
+        path = (Vertice) path.getLink();
+        return path;
     }
 
     public Vertice dfs(Vertice inicio) {
