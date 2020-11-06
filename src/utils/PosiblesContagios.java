@@ -56,9 +56,6 @@ public class PosiblesContagios implements MouseListener {
                     //info.append("¿Usa mascarrilla?: " + v.isMascarilla() + "\n");
                     //info.append("¿Está infectado?: " + v.isInfectado() + "\n");
                     //info.append("Tiene conexiones con los nodos: \n");
-                    labelEditar1.setText(""+v.getId());
-                    labelEditar2.setText(""+v.isMascarilla());
-                    labelEditar3.setText(""+v.isInfectado());
                     
                     Arista a = v.getAristas();
 
