@@ -22,7 +22,10 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
-import sun.java2d.pipe.BufferedOpCodes;
+//import javax.swing.Timer;
+import java.util.Timer;
+import java.util.TimerTask;
+//import sun.java2d.pipe.BufferedOpCodes;
 import utils.PosiblesContagios;
 
 /**
@@ -30,11 +33,13 @@ import utils.PosiblesContagios;
  * @author JPPM
  */
 public class Ventana extends javax.swing.JFrame {
-
-    // CovidTracker cvt;
+    
+// CovidTracker cvt;
+    Timer timer;
     Emergencia3 e3;
     Emergencia1 e;
     Emergencia2 e2;
+    Emergencia4 e4;
     int p;
     int posicionX;
     int posicionY;
@@ -50,14 +55,15 @@ public class Ventana extends javax.swing.JFrame {
     MainMenu m;
     PosiblesContagios posiblesContagios;
     boolean posicionesCalculadas;
-
+    int iteracionauto = 0;
     public Ventana() {
+        
         initComponents();
         posiciones = null;
         p = 0;
         this.DISTANCIA_NODOS_X = 150;
         this.DISTANCIA_NODOS_Y = this.grafoPanel.getHeight() / 3;
-
+        timer = new Timer();
         // posicion desde donde se comienza a dibujar los vertices;
         posicionX = 40;
         posicionY = this.grafoPanel.getHeight() / 6;
@@ -395,6 +401,8 @@ public class Ventana extends javax.swing.JFrame {
         reiniciar = new javax.swing.JButton();
         crear = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        quickIterations = new javax.swing.JLabel();
         panelBack = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
 
@@ -490,30 +498,44 @@ public class Ventana extends javax.swing.JFrame {
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/warning.png"))); // NOI18N
 
+        jButton1.setBackground(new java.awt.Color(138, 201, 38));
+        jButton1.setText("quick_It");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        quickIterations.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        quickIterations.setForeground(new java.awt.Color(255, 255, 255));
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(13, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(verticeField, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48))
-            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(44, 44, 44)
+                        .addComponent(verticeField, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(opcion3)
                     .addComponent(opcion2)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(iteraciones, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(opcion1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jLabel4)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(crear, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Iteracion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(reiniciar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(crear, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Iteracion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(reiniciar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(36, 36, 36)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton1)
+                            .addComponent(quickIterations))))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -529,9 +551,13 @@ public class Ventana extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(opcion3)
                 .addGap(27, 27, 27)
-                .addComponent(crear)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(crear)
+                    .addComponent(jButton1))
                 .addGap(18, 18, 18)
-                .addComponent(Iteracion)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Iteracion)
+                    .addComponent(quickIterations))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(reiniciar)
                 .addGap(18, 18, 18)
@@ -577,8 +603,8 @@ public class Ventana extends javax.swing.JFrame {
                 .addGap(45, 45, 45)
                 .addComponent(grafoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2))
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panelBack, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -644,6 +670,8 @@ public class Ventana extends javax.swing.JFrame {
         cvt.setPaciente0(false);
         Vertice.setIdGen(0);
         posicionesCalculadas = false;
+        quickIterations.setText("");
+        timer = new Timer();
     }//GEN-LAST:event_reiniciarActionPerformed
 
     private void IteracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IteracionActionPerformed
@@ -689,6 +717,39 @@ public class Ventana extends javax.swing.JFrame {
         m.setVisible(true);
     }//GEN-LAST:event_panelBackMouseClicked
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+      // timer = new Timer();
+       if(cvt.getPtr()!=null){
+             TimerTask tarea = new TimerTask() {
+            @Override
+            public void run() {
+                
+                cvt.infectar(cvt.getPtr().getInfectados());
+                dibujarVertices();
+                String label = "Iteracion: " + ++iteracionauto;
+                    quickIterations.setText(label);
+                    if (cvt.todosInfectados() && verticeField.getText().isEmpty() == false) {
+                    //JOptionPane.showMessageDialog(null, "YA TODOS LOS USUARIOS TIENEN COVID-19");
+                    e3 = new Emergencia3();
+                    e3.setVisible(true);
+
+                    }
+                    if(cvt.todosInfectados()){
+                    timer.cancel();
+                    timer.purge();
+                }
+            }
+        };
+        timer.schedule(tarea,0,1000);
+       }else{
+           e4 = new Emergencia4();
+           e4.setVisible(true);
+       }
+      
+        
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -731,6 +792,7 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JPanel grafoPanel;
     private javax.swing.ButtonGroup grupoBotones;
     private javax.swing.JLabel iteraciones;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -740,6 +802,7 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JRadioButton opcion2;
     private javax.swing.JRadioButton opcion3;
     private javax.swing.JPanel panelBack;
+    private javax.swing.JLabel quickIterations;
     private javax.swing.JButton reiniciar;
     private javax.swing.JTextField verticeField;
     // End of variables declaration//GEN-END:variables

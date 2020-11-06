@@ -9,6 +9,7 @@ import Grafico.MainMenu;
 import Grafico.Ventana;
 import java.util.Random;
 import java.util.Scanner;
+import javax.swing.Timer;
 
 /**
  *
@@ -25,6 +26,7 @@ public class CovidTracker {
         //v.setVisible(true);
           MainMenu m = new MainMenu();
           m.setVisible(true);
+        //  Timer timer = new Timer();
     }
 
     
